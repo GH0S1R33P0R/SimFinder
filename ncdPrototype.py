@@ -43,7 +43,6 @@ def GetRowsFromCSV(fileName):
     """ Function to get the values from a CSV file
     ARGS:
         fileName: name of the file to read
-        csvfile should begin by the '#' char as comments
         be delimeted by ','
 
     return:
@@ -59,7 +58,21 @@ def GetRowsFromCSV(fileName):
             items.append(row)
         return(items)
 
-            
+def runComparisonOnItems(listOfItems):
+    """Run getNCD for each item gainst each other and output the results
+    ARGS:
+        listOfItems: a list of items to run comparison on
+
+    return:
+        list of rows where each row represents an item, 
+        and the column represents the result of comparison with another item"""
+
+    for i in listOfItems:
+        for j in listOfItems:
+            result = getNCD(str(i), str(j))
+            print(result, end=",")
+        print()
+    
 
 def main():
 
@@ -69,6 +82,8 @@ def main():
         exit()
     else:
         rowList = GetRowsFromCSV(str(sys.argv[1]))
+
+    runComparisonOnItems(rowList)
 
 if __name__ == '__main__':
     main()

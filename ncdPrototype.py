@@ -2,7 +2,10 @@
 # ncdPrototype.py
 # Basic prototype of using Normalized Compression Distance to compare two strings.
 import zlib
+import csv
 import os
+import sys
+
 
 #TODO (Bader): Add level as param for zlib.compress
 def compressionSize(stringIn):
@@ -36,16 +39,36 @@ def getNCD(str1, str2):
     NCD_result = (NCD_A - NCD_B) / NCD_C #This is the formula that is used
     return NCD_result
 
+def GetRowsFromCSV(fileName):
+    """ Function to get the values from a CSV file
+    ARGS:
+        fileName: name of the file to read
+        csvfile should begin by the '#' char as comments
+        be delimeted by ','
+
+    return:
+        list of rows from the file. """
+
+    #Opening the file as a csv.reader object
+    with open(fileName, 'r') as csvFile:
+        csvReader = csv.reader(csvFile)
+        next(csvReader, None)
+
+        items = [] #Holder for items I need in the csv
+        for row in csvReader:
+            items.append(row)
+        return(items)
+
+            
+
 def main():
-    str1 = ''
-    str2 = ''
 
-    str1 = input("Enter the first string:")
-    str2 = input("Enter the second string:")
-
-    distance = getNCD(str1, str2)
-    print("Normalize compression distance is: " + str(distance))
-
+    if len(sys.argv) == 1:
+        #TODO (Bader): Update usage 
+        print("Need a filename")
+        exit()
+    else:
+        rowList = GetRowsFromCSV(str(sys.argv[1]))
 
 if __name__ == '__main__':
     main()

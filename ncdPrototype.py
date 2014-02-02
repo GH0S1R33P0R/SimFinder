@@ -10,7 +10,6 @@ import sys
 #TODO (Bader): Add level as param for zlib.compress
 def compressionSize(stringIn):
     """Returns the binary length of the compression of stringIn
-
         Input:
             stringIn: string to be analyzed
         Output:
@@ -72,7 +71,21 @@ def runComparisonOnItems(listOfItems):
             result = getNCD(str(i), str(j))
             print(result, end=",")
         print()
-    
+
+def combineCSVs(CSV1, CSV2):
+    outputCSV = []
+    for row1 in CSV1:
+        OID = row1[0]
+        for row2 in CSV2:
+            if row2[0] == OID:
+                outputCSV.append(row1 + row2)
+    return(outputCSV)
+
+def selectColumns(CSVin):
+    outputCSV = []
+    for row in CSVin:
+        outputCSV.append([row[16], row[86+6]])
+    return outputCSV
 
 def main():
     runMode = int(
@@ -92,15 +105,23 @@ def main():
         fileName1 = input("Please enter a filename:")
         fileName2 = input("Please enter another filename:")
 
-        rows1 = GetRowsFromCSV(fileName1)
-        rows2 = GetRowsFromCSV(fileName2)
-
-
+        CSV1 = GetRowsFromCSV(fileName1)
+        CSV2 = GetRowsFromCSV(fileName2)
+        combinedCSV = combineCSVs(CSV1, CSV2)
+        runComparisonOnItems(combinedCSV)
 
 
     elif (runMode == 3):
-        print("Still working on this")
-        #TODO: Selective two file run
+        fileName1 = input("Please enter a filename:")
+        fileName2 = input("Please enter another filename:")
+
+        CSV1 = GetRowsFromCSV(fileName1)
+        CSV2 = GetRowsFromCSV(fileName2)
+        combinedCSV = selectColumns(combineCSVs(CSV1, CSV2))
+        print()
+        print("summary:" + combinedCSV[574][0])
+        print("Comments:" + combinedCSV[574][1])
+        runComparisonOnItems(combinedCSV)
     """
     else:
 

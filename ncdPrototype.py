@@ -10,11 +10,11 @@ import sys
 #TODO (Bader): Add level as param for zlib.compress
 def compressionSize(stringIn):
     """Returns the binary length of the compression of stringIn
-        Input:
-            stringIn: string to be analyzed
-        Output:
-            int: length of the string after it is compressed
-    """
+    ARGS:
+        stringIn: string to be analyzed
+
+    return:
+        int: length of the string after it is compressed"""
 
     #TODO (Bader): take in binary input from file
     bytesIn = bytes(stringIn, 'utf-8')
@@ -25,12 +25,12 @@ def compressionSize(stringIn):
 
 def getNCD(str1, str2):
     """Returns the Normalized compression distance of two strings
+    ARGS:
+        str1, str2: The two strings to be compared
 
-        Input:
-            str1, str2: The two strings to be compared
-        Output:
-            int: The distance according to NCD
-    """
+    return:
+        int: The distance according to NCD"""
+
     NCD_A = compressionSize(str1+str2)
     NCD_B = min(compressionSize(str1), compressionSize(str2))
     NCD_C = max(compressionSize(str1), compressionSize(str2))
@@ -73,6 +73,14 @@ def runComparisonOnItems(listOfItems):
         print()
 
 def combineCSVs(CSV1, CSV2):
+    """Combines two list of rows with matching OID values
+    ARGS:
+        CSV1: First list of rows 
+        CSV2: Second list of rows 
+
+    return:
+        list of rows where the OID matches"""
+
     outputCSV = []
     for row1 in CSV1:
         OID = row1[0]
@@ -82,6 +90,15 @@ def combineCSVs(CSV1, CSV2):
     return(outputCSV)
 
 def selectColumns(CSVin):
+    """Outputs a list af rows from combineCSV
+        with only summary and conclusion fields
+    ARGS:
+        CSVin: Output of combineCSVs
+
+    return:
+        List of rows with just summary and conclusion"""
+
+    # This is hardcoded. 
     outputCSV = []
     for row in CSVin:
         outputCSV.append([row[16], row[86+6]])
@@ -101,6 +118,7 @@ def main():
         fileName = input("Please enter a filename:")
         rowList = GetRowsFromCSV(fileName)
         runComparisonOnItems(rowList)
+
     elif (runMode == 2):
         fileName1 = input("Please enter a filename:")
         fileName2 = input("Please enter another filename:")
@@ -109,7 +127,6 @@ def main():
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = combineCSVs(CSV1, CSV2)
         runComparisonOnItems(combinedCSV)
-
 
     elif (runMode == 3):
         fileName1 = input("Please enter a filename:")
@@ -122,10 +139,6 @@ def main():
         print("summary:" + combinedCSV[574][0])
         print("Comments:" + combinedCSV[574][1])
         runComparisonOnItems(combinedCSV)
-    """
-    else:
-
-    """
 
 if __name__ == '__main__':
     main()

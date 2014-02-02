@@ -75,15 +75,36 @@ def runComparisonOnItems(listOfItems):
     
 
 def main():
+    runMode = int(
+            input("---ncdPrototype---\n"
+                + "1) Generic 1 file run\n"
+                + "2) Generic 2 file run\n"
+                + "3) Generic 3 file run\n")
+            )
 
-    if len(sys.argv) == 1:
-        #TODO (Bader): Update usage 
-        print("Need a filename")
-        exit()
+    print(runMode)
+
+    if (runMode == 1):
+        fileName = input("Please enter a filename:")
+        rowList = GetRowsFromCSV(fileName)
+        runComparisonOnItems(rowList)
+    elif (runMode == 2):
+        fileName1 = input("Please enter a filename:")
+        fileName2 = input("Please enter another filename:")
+
+        rows1 = GetRowsFromCSV(fileName1)
+        rows2 = GetRowsFromCSV(fileName2)
+
+
+
+
+    elif (runMode == 3):
+        print("Still working on this")
+        #TODO: Selective two file run
+    """
     else:
-        rowList = GetRowsFromCSV(str(sys.argv[1]))
 
-    runComparisonOnItems(rowList)
+    """
 
 if __name__ == '__main__':
     main()

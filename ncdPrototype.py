@@ -109,7 +109,7 @@ def main():
             input("---ncdPrototype---\n"
                 + "1) Generic 1 file run\n"
                 + "2) Generic 2 file run\n"
-                + "3) Generic 3 file run\n")
+                + "3) Specific 2 file run\n")
             )
 
     print(runMode)

@@ -5,6 +5,7 @@ import zlib
 import csv
 import os
 import sys
+import operator
 
 
 #TODO (Bader): Add level as param for zlib.compress
@@ -57,7 +58,7 @@ def GetRowsFromCSV(fileName):
             items.append(row)
         return(items)
 
-def runComparisonOnItems(listOfItems):
+def runComparisonOnItemsAgainstSelf(listOfItems):
     """Run getNCD for each item gainst each other and output the results
     ARGS:
         listOfItems: a list of items to run comparison on
@@ -71,6 +72,27 @@ def runComparisonOnItems(listOfItems):
             result = getNCD(str(i), str(j))
             print(result, end=",")
         print()
+
+def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments):
+    """Run getNCD for each item gainst each other and output the results
+    ARGS:
+        listOfItems: a list of items to run comparison on
+
+    return:
+        list of rows where each row represents an item, 
+        and the column represents the result of comparison with another item"""
+
+    ItemToCompare = [summary, comments]
+
+    listToSort = []
+    for i in listOfItems:
+        result = getNCD(str(i), str(ItemToCompare))
+        listToSort.append([result, i])
+
+    sortedList = sorted(listToSort, key=operator.itemgetter(0))
+
+    for i in sortedList[0:20]:
+        print(",\t".join(map(str,i)))
 
 def combineCSVs(CSV1, CSV2):
     """Combines two list of rows with matching OID values
@@ -89,9 +111,9 @@ def combineCSVs(CSV1, CSV2):
                 outputCSV.append(row1 + row2)
     return(outputCSV)
 
-def selectColumns(CSVin):
+def selectSummaryAndCommentsColumns(CSVin):
     """Outputs a list af rows from combineCSV
-        with only summary and conclusion fields
+        with only summary and comments fields
     ARGS:
         CSVin: Output of combineCSVs
 
@@ -104,6 +126,21 @@ def selectColumns(CSVin):
         outputCSV.append([row[16], row[86+6]])
     return outputCSV
 
+def selectOIDSummaryAndCommentsColumns(CSVin):
+    """Outputs a list af rows from combineCSV
+        with only summary and comments fields
+    ARGS:
+        CSVin: Output of combineCSVs
+
+    return:
+        List of rows with just summary and conclusion"""
+
+    # This is hardcoded. 
+    outputCSV = []
+    for row in CSVin:
+        outputCSV.append([row[0], row[16], row[86+6]])
+    return outputCSV
+
 def main():
     runMode = int(
             input("---ncdPrototype---\n"
@@ -114,12 +151,10 @@ def main():
                 )
             )
 
-    print(runMode)
-
     if (runMode == 1):
         fileName = input("Please enter a filename:")
         rowList = GetRowsFromCSV(fileName)
-        runComparisonOnItems(rowList)
+        runComparisonOnItemsAgainstSelf(rowList)
 
     elif (runMode == 2):
         fileName1 = input("Please enter a filename:")
@@ -128,7 +163,7 @@ def main():
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = combineCSVs(CSV1, CSV2)
-        runComparisonOnItems(combinedCSV)
+        runComparisonOnItemsAgainstSelf(combinedCSV)
 
     elif (runMode == 3):
         fileName1 = input("Please enter a filename:")
@@ -136,8 +171,8 @@ def main():
 
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
-        combinedCSV = selectColumns(combineCSVs(CSV1, CSV2))
-        runComparisonOnItems(combinedCSV)
+        combinedCSV = selectSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
+        runComparisonOnItemsAgainstSelf(combinedCSV)
     elif (runMode == 4):
         fileName1 = input("Please enter a filename:")
         fileName2 = input("Please enter another filename:")
@@ -146,9 +181,8 @@ def main():
 
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
-        combinedCSV = selectColumns(combineCSVs(CSV1, CSV2))
-        #TODO(Bader): create runComparison on single item
-        runComparisonOnItems(combinedCSV)
+        combinedCSV = selectOIDSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
+        compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
 
 
 

@@ -6,6 +6,7 @@ import csv
 import os
 import sys
 import operator
+#TODO(Bader): Codec, UTF8
 
 
 #TODO (Bader): Add level as param for zlib.compress
@@ -32,6 +33,8 @@ def getNCD(str1, str2):
     return:
         int: The distance according to NCD"""
 
+
+    #TODO(Bader): Compress str1 and str2 ahead of time
     NCD_A = compressionSize(str1+str2)
     NCD_B = min(compressionSize(str1), compressionSize(str2))
     NCD_C = max(compressionSize(str1), compressionSize(str2))
@@ -105,6 +108,7 @@ def combineCSVs(CSV1, CSV2):
 
     outputCSV = []
     for row1 in CSV1:
+        #TODO(Bader) use IncidentRequestHistoryRecords instead of OID
         OID = row1[0]
         for row2 in CSV2:
             if row2[0] == OID:
@@ -121,6 +125,7 @@ def selectSummaryAndCommentsColumns(CSVin):
         List of rows with just summary and conclusion"""
 
     # This is hardcoded. 
+    #TODO(Bader) Grab first line from CSV to obtain columns
     outputCSV = []
     for row in CSVin:
         outputCSV.append([row[16], row[86+6]])
@@ -136,6 +141,7 @@ def selectOIDSummaryAndCommentsColumns(CSVin):
         List of rows with just summary and conclusion"""
 
     # This is hardcoded. 
+    #TODO(Bader) Grab first line from CSV to obtain columns
     outputCSV = []
     for row in CSVin:
         outputCSV.append([row[0], row[16], row[86+6]])
@@ -182,6 +188,7 @@ def main():
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = selectOIDSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
+        #TODO Put while loop to enter summary and coments
         compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
 
 

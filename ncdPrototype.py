@@ -109,7 +109,9 @@ def main():
             input("---ncdPrototype---\n"
                 + "1) Generic 1 file run\n"
                 + "2) Generic 2 file run\n"
-                + "3) Specific 2 file run\n")
+                + "3) Specific 2 file run\n"
+                + "4) Test user input with 2 files\n"
+                )
             )
 
     print(runMode)
@@ -135,10 +137,20 @@ def main():
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = selectColumns(combineCSVs(CSV1, CSV2))
-        print()
-        print("summary:" + combinedCSV[574][0])
-        print("Comments:" + combinedCSV[574][1])
         runComparisonOnItems(combinedCSV)
+    elif (runMode == 4):
+        fileName1 = input("Please enter a filename:")
+        fileName2 = input("Please enter another filename:")
+        Summary = input("Please enter a summary string:")
+        Comments = input("Please enter a comment string:")
+
+        CSV1 = GetRowsFromCSV(fileName1)
+        CSV2 = GetRowsFromCSV(fileName2)
+        combinedCSV = selectColumns(combineCSVs(CSV1, CSV2))
+        #TODO(Bader): create runComparison on single item
+        runComparisonOnItems(combinedCSV)
+
+
 
 if __name__ == '__main__':
     main()

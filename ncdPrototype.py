@@ -114,6 +114,7 @@ def combineCSVs(CSV1, CSV2):
     return:
         list of rows where the OID matches"""
 
+    #TODO: row2 can have multiple, append all to single row1
     outputCSV = []
     for row1 in CSV1:
         OID = row1[0]
@@ -193,11 +194,11 @@ def main():
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = selectOIDSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
-        #TODO Put while loop to enter summary and coments
 
         while True:
             Summary = input("Please enter a summary string:")
             Comments = input("Please enter a comment string:")
+#TODO(Bader): summary and comments toupper. Do same for above
             compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
 
 

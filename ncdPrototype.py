@@ -58,7 +58,11 @@ def GetRowsFromCSV(fileName):
     #Opening the file as a csv.reader object
     with open(fileName, 'r') as csvFile:
         csvReader = csv.reader(csvFile)
-        next(csvReader, None)
+        columns = next(csvReader, None)
+
+        print("\nColumns of " + fileName + " are:")
+        for idx, column in enumerate(columns):
+            print(str(idx) + ") " + str(column))
 
         items = [] #Holder for items I need in the csv
         for row in csvReader:
@@ -112,10 +116,9 @@ def combineCSVs(CSV1, CSV2):
 
     outputCSV = []
     for row1 in CSV1:
-        #TODO(Bader) use IncidentRequestHistoryRecords instead of OID
         OID = row1[0]
         for row2 in CSV2:
-            if row2[0] == OID:
+            if row2[26] == OID:
                 outputCSV.append(row1 + row2)
     return(outputCSV)
 
@@ -186,14 +189,16 @@ def main():
     elif (runMode == 4):
         fileName1 = input("Please enter a filename:")
         fileName2 = input("Please enter another filename:")
-        Summary = input("Please enter a summary string:")
-        Comments = input("Please enter a comment string:")
 
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = selectOIDSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
         #TODO Put while loop to enter summary and coments
-        compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
+
+        while True:
+            Summary = input("Please enter a summary string:")
+            Comments = input("Please enter a comment string:")
+            compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
 
 
 

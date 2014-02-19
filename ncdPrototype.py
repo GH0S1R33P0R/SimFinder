@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#-*- coding: utf-8 -*-
 # ncdPrototype.py
 # Basic prototype of using Normalized Compression Distance to compare two strings.
 import zlib
@@ -6,7 +7,8 @@ import csv
 import os
 import sys
 import operator
-#TODO(Bader): Codec, UTF8
+#Fixes UTF-8 issues in Windows
+import codecs
 
 
 #TODO (Bader): Add level as param for zlib.compress
@@ -33,11 +35,13 @@ def getNCD(str1, str2):
     return:
         int: The distance according to NCD"""
 
+    #Compress str1 and str2 ahead of time
+    compressedStr1 = compressionSize(str1)
+    compressedStr2 = compressionSize(str2)
 
-    #TODO(Bader): Compress str1 and str2 ahead of time
     NCD_A = compressionSize(str1+str2)
-    NCD_B = min(compressionSize(str1), compressionSize(str2))
-    NCD_C = max(compressionSize(str1), compressionSize(str2))
+    NCD_B = min(compressedStr1, compressedStr2)
+    NCD_C = max(compressedStr1, compressedStr2)
 
     NCD_result = (NCD_A - NCD_B) / NCD_C #This is the formula that is used
     return NCD_result

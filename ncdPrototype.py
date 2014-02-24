@@ -7,6 +7,8 @@ import csv
 import os
 import sys
 import operator
+import os
+import webbrowser
 #Fixes UTF-8 issues in Windows
 import codecs
 
@@ -98,18 +100,36 @@ def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments, serverN
 
     ItemToCompare = [summary, comments]
     server = str(serverName)
+    f = open('output.html','w')
 	
     listToSort = []
     for i in listOfItems:
         result = getNCD(str(i), str(ItemToCompare))
         OID = i[0]
-        hyperlink = "Ticket URL:  http://" + server + "/CGWeb/MainUI/ServiceDesk/SDItemEditPanel.aspx?boundtable=IIncidentRequest&ID=" + OID
+        
+        hyperlink = "<a href=http://" + server + "/CGWeb/MainUI/ServiceDesk/SDItemEditPanel" \
+        ".aspx?boundtable=IIncidentRequest&ID=" + OID + ">Link to Ticket</a></li>"
+        
         listToSort.append([result, i, hyperlink])
 
     sortedList = sorted(listToSort, key=operator.itemgetter(0))
+    
+    message = "<html><ol>"
+    f.write(message + '\n')
 
     for i in sortedList[0:20]:
-        print(",\t".join(map(str,i)))
+        message = "<li>"
+        f.write(message)
+        message = ",\t".join(map(str,i))
+        f.write(message + '\n')
+    
+    message = "</ol></html>"
+    f.write(message)    
+    f.close()
+    
+    path = str(os.path.dirname(os.path.realpath(__file__)))
+    outputFile='file://' + path + '/output.html'
+    webbrowser.open(outputFile)
 
 def combineCSVs(CSV1, CSV2):
     """Combines two list of rows with matching OID values

@@ -84,21 +84,27 @@ def runComparisonOnItemsAgainstSelf(listOfItems):
             print(result, end=",")
         print()
 
-def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments):
+def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments, serverName):
     """Run getNCD for each item gainst each other and output the results
     ARGS:
         listOfItems: a list of items to run comparison on
-
+        summary: the summary of a ticket
+        comments: the comments of a ticket
+        serverName: the server that the tickets to be searched reside on
+        
     return:
         list of rows where each row represents an item, 
         and the column represents the result of comparison with another item"""
 
     ItemToCompare = [summary, comments]
-
+    server = str(serverName)
+	
     listToSort = []
     for i in listOfItems:
         result = getNCD(str(i), str(ItemToCompare))
-        listToSort.append([result, i])
+        OID = i[0]
+        hyperlink = "Ticket URL:  http://" + server + "/CGWeb/MainUI/ServiceDesk/SDItemEditPanel.aspx?boundtable=IIncidentRequest&ID=" + OID
+        listToSort.append([result, i, hyperlink])
 
     sortedList = sorted(listToSort, key=operator.itemgetter(0))
 
@@ -166,13 +172,13 @@ def main():
             )
 
     if (runMode == 1):
-        fileName = input("Please enter a filename:")
+        fileName = input("Please enter a filename: ")
         rowList = GetRowsFromCSV(fileName)
         runComparisonOnItemsAgainstSelf(rowList)
 
     elif (runMode == 2):
-        fileName1 = input("Please enter a filename:")
-        fileName2 = input("Please enter another filename:")
+        fileName1 = input("Please enter a filename: ")
+        fileName2 = input("Please enter another filename: ")
 
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
@@ -180,26 +186,28 @@ def main():
         runComparisonOnItemsAgainstSelf(combinedCSV)
 
     elif (runMode == 3):
-        fileName1 = input("Please enter a filename:")
-        fileName2 = input("Please enter another filename:")
+        fileName1 = input("Please enter a filename: ")
+        fileName2 = input("Please enter another filename: ")
 
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = selectSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
         runComparisonOnItemsAgainstSelf(combinedCSV)
+   
     elif (runMode == 4):
-        fileName1 = input("Please enter a filename:")
-        fileName2 = input("Please enter another filename:")
+        fileName1 = input("Please enter a filename: ")
+        fileName2 = input("Please enter another filename: ")
 
         CSV1 = GetRowsFromCSV(fileName1)
         CSV2 = GetRowsFromCSV(fileName2)
         combinedCSV = selectOIDSummaryAndCommentsColumns(combineCSVs(CSV1, CSV2))
 
         while True:
-            Summary = input("Please enter a summary string:")
-            Comments = input("Please enter a comment string:")
+            Summary = input("Please enter a summary string: ")
+            Comments = input("Please enter a comment string: ")
+            Server = input("Please enter the name of your server: ")
 #TODO(Bader): summary and comments toupper. Do same for above
-            compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
+            compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments, Server)
 
 
 

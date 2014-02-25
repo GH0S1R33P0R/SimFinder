@@ -160,18 +160,43 @@ def selectOIDSummaryAndCommentsColumns(CSVin):
     return outputCSV
 
 def main():
-    runMode = int(
-            input("---ncdPrototype---\n"
-                + "1) Generic 1 file run\n"
-                + "2) Generic 2 file run\n"
-                + "3) Specific 2 file run\n"
-                + "4) Test user input with 2 files\n"
-                )
-            )
-    #TODO(Bader): Ask if want to open files in repl
-    #TODO(Bader): Open files, get columns
-    #TODO(Bader): Ask for main column (OID)
-    #TODO(Bader): Ask for columns to match
+
+    #Ask if want to open files in repl
+    main_file = input("Please enter the main file:")
+
+    #TODO(Bader): Output list of columns
+
+    main_OID_column = int(input("Enter the column with the OID:"))
+
+    #Create a list of all files
+    file_list = [main_file]
+    column_list = [main_OID_column] #Represents columns in combined csv
+
+    print("***Getting Other Files***")
+    #REPL for getting other files
+    while True:
+
+        #break condition for loop
+        another_file = input("Enter another file (Y/n)?:").lower()
+        if(another_file == 'n'):
+            break
+
+        file_list.append(input("File name:"))
+
+    print("***Getting Columns To Match***")
+    #REPL for getting OID column numbers
+    for fileName in file_list[1:]:
+        print("For file [" + fileName + "] ", end='')
+        #TODO(Bader): Open file, get columns
+        next_file_OID_num = int(input("Which column has the ID value?")) 
+        #TODO(Bader): Add width of previous files to next_file_OID_column
+
+        column_list.append(next_file_OID_num)
+
+    print(file_list)
+    print(column_list)
+
+
     #TODO(Bader): Ask for columns to use for ticket info
     #TODO(Bader): Ask if ToUpper (or lower) is needed
     #TODO(Bader): Ask if NULL should be stripped

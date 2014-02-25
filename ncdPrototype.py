@@ -114,13 +114,15 @@ def combineCSVs(CSV1, CSV2):
     return:
         list of rows where the OID matches"""
 
-    #TODO: row2 can have multiple, append all to single row1
+    #row2 can have multiple instances, append all to single row1
     outputCSV = []
     for row1 in CSV1:
         OID = row1[0]
+        temp = row1
         for row2 in CSV2:
             if row2[26] == OID:
-                outputCSV.append(row1 + row2)
+                temp = temp + row2
+        outputCSV.append(temp)
     return(outputCSV)
 
 def selectSummaryAndCommentsColumns(CSVin):

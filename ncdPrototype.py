@@ -7,6 +7,8 @@ import csv
 import os
 import sys
 import operator
+import webbrowser
+import re
 #Fixes UTF-8 issues in Windows
 import codecs
 
@@ -127,7 +129,31 @@ def compareAllAgainstItemID(listOfItems, ItemID):
         list of rows where each row represents an item, 
         and the column represents the result of comparison with another item"""
 
-    print(ItemID)
+    ID_Stripped = int(ItemID[3:]) #Essentially  /^IR-0*(.*)/
+
+    found = None
+
+    for i, item in enumerate(listOfItems):
+        if(int(item[0]) == ID_Stripped):
+            found = item
+
+    if(found == None):
+        print("ID Does not exist!")
+        exit(1)
+
+
+    listToSort = []
+    for i in listOfItems:
+        result = getNCD(str(i), str(found))
+        listToSort.append([result, i])
+
+    #Sort list by NCD value
+    sortedList = sorted(listToSort, key=operator.itemgetter(0))
+
+    return(sortedList)
+
+
+
 
 def combineCSVsSelectively(CSV1, CSV2):
     """Combines two list of rows with matching OID values from Ticket_Matches
@@ -141,7 +167,6 @@ def combineCSVsSelectively(CSV1, CSV2):
     #row2 can have multiple instances, append all to single row1
     outputCSV = []
     for row1 in CSV1:
-        print(".", end="")
         OID = row1[main_OID_column]
         temp = [OID]
         temp = temp + [row1[Ticket_Matches[0]]] #Grab summary
@@ -293,6 +318,8 @@ def main():
     combinedCSV = combineCSVsSelectively(CSV1, CSV2)
     #TODO(Bader): select columns from combinedCSV
 
+    URLPrefix = "http://" + SERVERNAME + "CGWeb/MainUI/ServiceDesk/SDItemEditPanel.aspx?boundtable=IIncidentRequest&ID="
+
 
     stillRunning = True
 
@@ -300,12 +327,12 @@ def main():
         print("*****************")
         print("What input type")
         runMode = int(input("\t0)ItemID or"
-                            "\t\n1)Sample ticket"
-                            "\t\n*)Quit:\n"))
+                            "\n\t1)Sample ticket"
+                            "\n\t*)Quit:\n"))
 
         if (runMode == 0):
             ItemID = input("What is the ItemID:")
-            #TODO CompareItemID
+            sortedList = compareAllAgainstItemID(combinedCSV,ItemID)
         elif (runMode == 1):
             Summary = input("Please enter a summary string:")
             Comments = input("Please enter a comment string:")
@@ -314,8 +341,12 @@ def main():
             stillRunning = False
             break
 
-        for i in sortedList[0:20]:
-            print("\t".join(map(str,i)))
+        for i, item in enumerate(sortedList[0:20]): #Change that number?
+            print(str(i) + ") " + "\t".join(map(str,item)))
+
+        toOpen = int(input("Which one do you want to open?"))
+        if (toOpen > -1):
+            webbrowser.open(URLPrefix + str(sortedList[toOpen][1][0]))
 
 
     #TODO(Bader): Ask if ToUpper (or lower) is needed

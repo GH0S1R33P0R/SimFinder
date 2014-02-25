@@ -164,16 +164,29 @@ def main():
     #Ask if want to open files in repl
     main_file = input("Please enter the main file:")
 
-    #TODO(Bader): Output list of columns
+    allColumns = []
 
+    #TODO(Bader): Make this try-except and forloop  into a function
+    try:
+        with open(main_file, 'r') as f:
+            columns = f.readline().strip().split(',')
+    except IOError:
+        print("Error: file does not exist")
+        return
+
+    for i, column in enumerate(columns):
+        column_with_fileName = main_file + "." + column
+        allColumns.append(column_with_fileName)
+        print(str(i) + ")["  + column_with_fileName + "]")
+
+    #Get the OID column to match everything else with
     main_OID_column = int(input("Enter the column with the OID:"))
 
     #Create a list of all files
     file_list = [main_file]
-    column_list = [main_OID_column] #Represents columns in combined csv
 
-    print("***Getting Other Files***")
     #REPL for getting other files
+    print("***Getting Other Files***")
     while True:
 
         #break condition for loop
@@ -183,11 +196,10 @@ def main():
 
         file_list.append(input("File name:"))
 
-    print("***Getting Columns To Match***")
-    #REPL for getting OID column numbers
+
+    #Getting a combined list of columns
     for fileName in file_list[1:]:
         print("For file [" + fileName + "] ")
-        #TODO(Bader): Open file, get columns
         try:
             with open(fileName, 'r') as f:
                 columns = f.readline().strip().split(',')
@@ -196,15 +208,21 @@ def main():
             return
 
         for i, column in enumerate(columns):
-            print(str(i) + ")["  + fileName + "." + column + "]")
+            column_with_fileName = fileName + "." + column
+            allColumns.append(column_with_fileName)
 
-        next_file_OID_num = int(input("Which column has the ID value?")) 
-        #TODO(Bader): Add width of previous files to next_file_OID_column
+#        next_file_OID_num = int(input("Which column has the ID value?")) 
 
-        column_list.append(next_file_OID_num)
+#        column_list.append(next_file_OID_num)
 
-    print(file_list)
-    print(column_list)
+
+    for i, column in enumerate(allColumns):
+        print(str(i) + ")[" + column + "]")
+
+    OID_Matches = input("Enter columns to match OID with"
+                        "(seperate with commas):")
+    OID_Matches = list(map(int, OID_Matches.strip().split(',')))
+
 
 
     #TODO(Bader): Ask for columns to use for ticket info

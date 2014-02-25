@@ -85,9 +85,11 @@ def runComparisonOnItemsAgainstSelf(listOfItems):
         print()
 
 def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments):
-    """Run getNCD for each item gainst each other and output the results
+    """Run getNCD for each item gainst one ticket and output the results
     ARGS:
         listOfItems: a list of items to run comparison on
+        summary: a summary string to use for the ticket
+        comments: a comment string to use for the ticket
 
     return:
         list of rows where each row represents an item, 

@@ -15,6 +15,11 @@ allColumns = None
 main_OID_column = None
 file_list = None
 
+OID_Matches = None
+Ticket_Matches = None
+sizeOfFiles = None
+
+
 #TODO (Bader): Add level as param for zlib.compress
 def compressionSize(stringIn):
     """Returns the binary length of the compression of stringIn
@@ -111,6 +116,28 @@ def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments):
     for i in sortedList[0:20]:
         print(",\t".join(map(str,i)))
 
+def combineCSVsSelectively(CSV1, CSV2):
+    """Combines two list of rows with matching OID values from TicketMatches
+    ARGS:
+        CSV1: First list of rows 
+        CSV2: Second list of rows 
+
+    return:
+        list of rows where the OID matches"""
+
+    #row2 can have multiple instances, append all to single row1
+    outputCSV = []
+    for row1 in CSV1:
+        OID = row1[main_OID_column]
+        temp = [OID]
+        temp = temp + row1[TicketMatches[0]] #Grab summary
+        for row2 in CSV2:
+            if row2[OID_Matches[0]] == OID:
+                #Grab comments from second file
+                temp = temp + row2[TicketMatches[1] - sizeOfFiles[0]] # 
+        outputCSV.append(temp)
+    return(outputCSV)
+
 def combineCSVs(CSV1, CSV2):
     """Combines two list of rows with matching OID values
     ARGS:
@@ -168,11 +195,15 @@ def main():
     global allColumns
     global main_OID_column
     global file_list
+    global OID_Matches
+    global TicketMatches
+    global sizeOfFiles
 
     #Ask if want to open files in repl
     main_file = input("Please enter the main file:")
 
     allColumns = []
+    sizeOfFiles = []
 
     #TODO(Bader): Make this try-except and forloop  into a function
     try:
@@ -181,6 +212,7 @@ def main():
     except IOError:
         print("Error: file does not exist")
         return
+    sizeOfFiles[0] = len(columns)
 
     for i, column in enumerate(columns):
         column_with_fileName = main_file + "." + column
@@ -198,11 +230,12 @@ def main():
     while True:
 
         #break condition for loop
-        another_file = input("Enter another file (Y/n)?:").lower()
-        if(another_file == 'n'):
-            break
+        #another_file = input("Enter another file (Y/n)?:").lower()
+        #if(another_file == 'n'):
+        #    break
 
         file_list.append(input("File name:"))
+        break #TODO: Do we NEED more than two files?
 
 
     #Getting a combined list of columns
@@ -214,6 +247,7 @@ def main():
         except IOError:
             print("Error: file does not exist")
             return
+        sizeOfFiles.append(len(columns))
 
         for i, column in enumerate(columns):
             column_with_fileName = fileName + "." + column
@@ -227,13 +261,38 @@ def main():
     for i, column in enumerate(allColumns):
         print(str(i) + ")[" + column + "]")
 
-    OID_Matches = input("Enter columns to match OID with"
-                        "(seperate with commas):")
-    OID_Matches = list(map(int, OID_Matches.strip().split(',')))
+    OID_Matches = int(input("Enter column to match OID with:"))
+#                        "(seperate with commas):")
+#    OID_Matches = list(map(int, OID_Matches.strip().split(',')))
 
     Ticket_Matches = input("Enter columns to match the ticket with"
-                        "(seperate with commas):")
+#                        "(seperate with commas):")
+                            "(Summary, Comments):")
     Ticket_Matches = list(map(int, Ticket_Matches.strip().split(',')))
+
+    print(OID_Matches)
+    print(Ticket_Matches)
+
+    CSV1 = GetRowsFromCSV(file_list[0])
+    CSV2 = GetRowsFromCSV(file_list[1])
+    combinedCSV = combineCSVsSelectively(CSV1, CSV2)
+    #TODO(Bader): select columns from combinedCSV
+
+
+    stillRunning = True
+
+    while(stillRunning):
+        print("What input type")
+        runMode = int(input("0)ItemID or \n1)Sample ticket\n"))
+
+        if (runMode == 0):
+            print("Blah")
+        elif (runMode == 1):
+            print("Blooh")
+
+        #TODO(Bader): Ask for mode 
+            #TODO(Bader) Input
+
 
 
 

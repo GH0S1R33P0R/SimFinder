@@ -186,8 +186,18 @@ def main():
     print("***Getting Columns To Match***")
     #REPL for getting OID column numbers
     for fileName in file_list[1:]:
-        print("For file [" + fileName + "] ", end='')
+        print("For file [" + fileName + "] ")
         #TODO(Bader): Open file, get columns
+        try:
+            with open(fileName, 'r') as f:
+                columns = f.readline().strip().split(',')
+        except IOError:
+            print("Error: file does not exist")
+            return
+
+        for i, column in enumerate(columns):
+            print(str(i) + ")["  + fileName + "." + column + "]")
+
         next_file_OID_num = int(input("Which column has the ID value?")) 
         #TODO(Bader): Add width of previous files to next_file_OID_column
 
@@ -206,6 +216,7 @@ def main():
     #TODO(Bader): Ask for i in x to open in browser?
     #TODO(Bader): openURL
 
+"""
     if (runMode == 1):
         fileName = input("Please enter a filename:")
         rowList = GetRowsFromCSV(fileName)
@@ -241,6 +252,7 @@ def main():
             Comments = input("Please enter a comment string:")
 #TODO(Bader): summary and comments toupper. Do same for above
             compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
+            """
 
 
 

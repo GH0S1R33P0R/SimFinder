@@ -223,9 +223,12 @@ def main():
                         "(seperate with commas):")
     OID_Matches = list(map(int, OID_Matches.strip().split(',')))
 
+    Ticket_Matches = input("Enter columns to match the ticket with"
+                        "(seperate with commas):")
+    Ticket_Matches = list(map(int, Ticket_Matches.strip().split(',')))
 
 
-    #TODO(Bader): Ask for columns to use for ticket info
+
     #TODO(Bader): Ask if ToUpper (or lower) is needed
     #TODO(Bader): Ask if NULL should be stripped
     #TODO(Bader): All below is a repl

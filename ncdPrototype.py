@@ -168,6 +168,18 @@ def main():
                 + "4) Test user input with 2 files\n"
                 )
             )
+    #TODO(Bader): Ask if want to open files in repl
+    #TODO(Bader): Open files, get columns
+    #TODO(Bader): Ask for main column (OID)
+    #TODO(Bader): Ask for columns to match
+    #TODO(Bader): Ask for columns to use for ticket info
+    #TODO(Bader): Ask if ToUpper (or lower) is needed
+    #TODO(Bader): Ask if NULL should be stripped
+    #TODO(Bader): All below is a repl
+    #TODO(Bader): For each column, ask for a string
+    #TODO(Bader): Return top x results
+    #TODO(Bader): Ask for i in x to open in browser?
+    #TODO(Bader): openURL
 
     if (runMode == 1):
         fileName = input("Please enter a filename:")

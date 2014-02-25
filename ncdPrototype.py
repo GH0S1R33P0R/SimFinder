@@ -10,6 +10,10 @@ import operator
 #Fixes UTF-8 issues in Windows
 import codecs
 
+#GLOBALS
+allColumns = None
+main_OID_column = None
+file_list = None
 
 #TODO (Bader): Add level as param for zlib.compress
 def compressionSize(stringIn):
@@ -160,6 +164,10 @@ def selectOIDSummaryAndCommentsColumns(CSVin):
     return outputCSV
 
 def main():
+
+    global allColumns
+    global main_OID_column
+    global file_list
 
     #Ask if want to open files in repl
     main_file = input("Please enter the main file:")

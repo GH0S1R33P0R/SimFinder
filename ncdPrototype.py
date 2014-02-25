@@ -18,6 +18,7 @@ file_list = None
 OID_Matches = None
 Ticket_Matches = None
 sizeOfFiles = None
+SERVERNAME = None
 
 
 #TODO (Bader): Add level as param for zlib.compress
@@ -69,9 +70,9 @@ def GetRowsFromCSV(fileName):
         csvReader = csv.reader(csvFile)
         columns = next(csvReader, None)
 
-        print("\nColumns of " + fileName + " are:")
-        for idx, column in enumerate(columns):
-            print(str(idx) + ") " + str(column))
+        #print("\nColumns of " + fileName + " are:")
+        #for idx, column in enumerate(columns):
+        #    print(str(idx) + ") " + str(column))
 
         items = [] #Holder for items I need in the csv
         for row in csvReader:
@@ -111,13 +112,25 @@ def compareAllAgainstSummaryAndComments(listOfItems, summary,  comments):
         result = getNCD(str(i), str(ItemToCompare))
         listToSort.append([result, i])
 
+    #Sort list by NCD value
     sortedList = sorted(listToSort, key=operator.itemgetter(0))
 
-    for i in sortedList[0:20]:
-        print(",\t".join(map(str,i)))
+    return(sortedList)
+
+def compareAllAgainstItemID(listOfItems, ItemID):
+    """Run getNCD against a single ItemID
+    ARGS:
+        listOfItems: a list of items to run comparison on
+        ItemID: ID of ticket in system (Matches OID)
+
+    return:
+        list of rows where each row represents an item, 
+        and the column represents the result of comparison with another item"""
+
+    print(ItemID)
 
 def combineCSVsSelectively(CSV1, CSV2):
-    """Combines two list of rows with matching OID values from TicketMatches
+    """Combines two list of rows with matching OID values from Ticket_Matches
     ARGS:
         CSV1: First list of rows 
         CSV2: Second list of rows 
@@ -128,13 +141,14 @@ def combineCSVsSelectively(CSV1, CSV2):
     #row2 can have multiple instances, append all to single row1
     outputCSV = []
     for row1 in CSV1:
+        print(".", end="")
         OID = row1[main_OID_column]
         temp = [OID]
-        temp = temp + row1[TicketMatches[0]] #Grab summary
+        temp = temp + [row1[Ticket_Matches[0]]] #Grab summary
         for row2 in CSV2:
-            if row2[OID_Matches[0]] == OID:
+            if row2[OID_Matches - sizeOfFiles[0]] == OID:
                 #Grab comments from second file
-                temp = temp + row2[TicketMatches[1] - sizeOfFiles[0]] # 
+                temp = temp + [row2[Ticket_Matches[1] - sizeOfFiles[0]]]
         outputCSV.append(temp)
     return(outputCSV)
 
@@ -196,8 +210,9 @@ def main():
     global main_OID_column
     global file_list
     global OID_Matches
-    global TicketMatches
+    global Ticket_Matches
     global sizeOfFiles
+    global SERVERNAME
 
     #Ask if want to open files in repl
     main_file = input("Please enter the main file:")
@@ -212,7 +227,7 @@ def main():
     except IOError:
         print("Error: file does not exist")
         return
-    sizeOfFiles[0] = len(columns)
+    sizeOfFiles.append(len(columns))
 
     for i, column in enumerate(columns):
         column_with_fileName = main_file + "." + column
@@ -270,11 +285,11 @@ def main():
                             "(Summary, Comments):")
     Ticket_Matches = list(map(int, Ticket_Matches.strip().split(',')))
 
-    print(OID_Matches)
-    print(Ticket_Matches)
 
+    SERVERNAME = input("What is the Server name?:")
     CSV1 = GetRowsFromCSV(file_list[0])
     CSV2 = GetRowsFromCSV(file_list[1])
+    print("Combining the files")
     combinedCSV = combineCSVsSelectively(CSV1, CSV2)
     #TODO(Bader): select columns from combinedCSV
 
@@ -282,18 +297,25 @@ def main():
     stillRunning = True
 
     while(stillRunning):
+        print("*****************")
         print("What input type")
-        runMode = int(input("0)ItemID or \n1)Sample ticket\n"))
+        runMode = int(input("\t0)ItemID or"
+                            "\t\n1)Sample ticket"
+                            "\t\n*)Quit:\n"))
 
         if (runMode == 0):
-            print("Blah")
+            ItemID = input("What is the ItemID:")
+            #TODO CompareItemID
         elif (runMode == 1):
-            print("Blooh")
+            Summary = input("Please enter a summary string:")
+            Comments = input("Please enter a comment string:")
+            sortedList = compareAllAgainstSummaryAndComments(combinedCSV, Summary, Comments)
+        else:
+            stillRunning = False
+            break
 
-        #TODO(Bader): Ask for mode 
-            #TODO(Bader) Input
-
-
+        for i in sortedList[0:20]:
+            print("\t".join(map(str,i)))
 
 
     #TODO(Bader): Ask if ToUpper (or lower) is needed

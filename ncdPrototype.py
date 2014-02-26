@@ -68,7 +68,7 @@ def GetRowsFromCSV(fileName):
         list of rows from the file. """
 
     #Opening the file as a csv.reader object
-    with open(fileName, 'r') as csvFile:
+    with codecs.open(fileName, 'r', 'utf-8') as csvFile:
         csvReader = csv.reader(csvFile)
         columns = next(csvReader, None)
 
@@ -247,7 +247,7 @@ def main():
 
     #TODO(Bader): Make this try-except and forloop  into a function
     try:
-        with open(main_file, 'r') as f:
+        with codecs.open(main_file, 'r', 'utf-8') as f:
             columns = f.readline().strip().split(',')
     except IOError:
         print("Error: file does not exist")
@@ -282,7 +282,7 @@ def main():
     for fileName in file_list[1:]:
         print("For file [" + fileName + "] ")
         try:
-            with open(fileName, 'r') as f:
+            with codecs.open(fileName, 'r', 'utf-8') as f:
                 columns = f.readline().strip().split(',')
         except IOError:
             print("Error: file does not exist")

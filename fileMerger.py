@@ -144,6 +144,20 @@ def get_only_summary_and_comments(CSV1, CSV2, OID_1, OID_2, Item_ID_column,\
 
     return(outputCSV)
 
+def write_list_to_file(CSVIN):
+    """Write the list of tickets to a file
+
+    ARGS:
+        CSVIN: The list of tickets to write
+
+    return:
+        None"""
+    out_file_name = input("Name of file to write to:")
+
+    with open(out_file_name, 'w') as f:
+        for item in CSVIN:
+            f.write(str(item[0]) + ": " + ", ".join(item[1:]) + "\n")
+
 def main():
     # Getting the information about the main file
     main_file = input("Please enter the main file: ")
@@ -151,7 +165,7 @@ def main():
 
     main_Item_ID_column = int(input("Enter the column with the ItemID: "))
 
-    #TODO(Bader): Prompt for just summary, quit after if yes
+    #TODO(Bader): Make UI more intuitive 
     if(input("Only do summary? [y/N]: ").upper() == 'Y'):
         summary_column = int(input("Enter the column with the summary: "))
         print("Extracting data from files")
@@ -160,6 +174,7 @@ def main():
 
         output_csv = get_only_summary(CSV1, main_Item_ID_column, summary_column)
         print("Done getting summary columns")
+        write_list_to_file(output_csv)
         return()
 
     # Get the OID column to match everything else with
@@ -187,19 +202,14 @@ def main():
                 main_OID_column, second_OID_column,  main_Item_ID_column,\
                 summary_column, action_column, comments_column)
 
-        for i in output_csv[:5]:
-            print(i)
+        write_list_to_file(output_csv)
         return()
 
-
-
     print("Combining the files")
-    combinedCSV = combine_all_ticket_values(CSV1, CSV2,\
+    output_csv = combine_all_ticket_values(CSV1, CSV2,\
             main_OID_column, second_OID_column, main_Item_ID_column)
     print("Done combining files!")
-
-
-
+    write_list_to_file(output_csv)
 
 if __name__ == '__main__':
     main()

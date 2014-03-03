@@ -63,6 +63,7 @@ def combine_all_ticket_values(CSV1, CSV2, OID_1, OID_2, Item_ID_column):
         CSV2: Second list of rows 
         OID_1: Column number for first CSV's OID
         OID_2: Column number for second CSV's OID
+        Item_ID_column: Column number for the ItemID
 
     return:
         list of rows where the OID matches"""
@@ -85,14 +86,48 @@ def combine_all_ticket_values(CSV1, CSV2, OID_1, OID_2, Item_ID_column):
 
     return(outputCSV)
 
+def get_only_summary(CSV1, Item_ID_column, summary_column):
+    """Creates a list of just summary's
+    ARGS:
+        CSV1: List of rows
+        Item_ID_column: Column number for the ItemID
+        summary_column: Column number for the summary
+
+    return:
+       List of rows where each row has the itemID and Summary only """
+    outputCSV = []
+    for row1 in CSV1:
+        temp = [row1[Item_ID_column]] # For saving the ItemID
+        temp = temp + [row1[summary_column]]
+
+        # Removing all NULL's
+        temp = [item for item in temp if item != 'NULL']
+        # Converting all strings to upper case
+        temp = [item.upper() for item in temp]
+        outputCSV.append(temp)
+
+    return(outputCSV)
+
 def main():
     # Getting the information about the main file
     main_file = input("Please enter the main file: ")
     open_file_and_list_rows(main_file)
 
+    main_Item_ID_column = int(input("Enter the column with the ItemID: "))
+
+    #TODO(Bader): Prompt for just summary, quit after if yes
+    if(input("Only do summary? [y/N]: ").upper() == 'Y'):
+        summary_column = int(input("Enter the column with the summary: "))
+        print("Extracting data from files")
+        CSV1 = get_rows_from_csv(main_file)
+        print("File:[%s] is done" % (main_file))
+
+        output_csv = get_only_summary(CSV1, main_Item_ID_column, summary_column)
+        print("Done getting summary columns")
+        return()
+
     # Get the OID column to match everything else with
     main_OID_column = int(input("Enter the column with the OID: "))
-    main_Item_ID_column = int(input("Enter the column with the ItemID: "))
 
     # Getting information about the second file
     second_file = input("Please enter the second file: ")

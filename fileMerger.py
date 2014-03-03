@@ -79,12 +79,9 @@ def combine_all_ticket_values(CSV1, CSV2, OID_1, OID_2, Item_ID_column):
                 temp = temp + row2
         #TODO: Strip NULL and toUpper all elements in temp
         #Removing all NULL's
-      #  temp = [item for item in temp if item != 'NULL']
+        temp = [item for item in temp if item != 'NULL']
         outputCSV.append(temp)
 
-    # Debug stuff
-    for i in outputCSV[:3]:
-        print(i)
     return(outputCSV)
 
 def main():
@@ -112,6 +109,7 @@ def main():
     print("Combining the files")
     combinedCSV = combine_all_ticket_values(CSV1, CSV2,\
             main_OID_column, second_OID_column, main_Item_ID_column)
+    print("Done combining files!")
 
 
 if __name__ == '__main__':

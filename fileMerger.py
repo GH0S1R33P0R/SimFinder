@@ -56,6 +56,7 @@ def get_rows_from_csv(fileName):
         for row in csvReader:
             items.append(row)
         return(items)
+
 def combine_all_ticket_values(CSV1, CSV2, OID_1, OID_2, Item_ID_column):
     """Combines two list of rows with matching OID values from Ticket_Matches
     ARGS:
@@ -108,6 +109,41 @@ def get_only_summary(CSV1, Item_ID_column, summary_column):
 
     return(outputCSV)
 
+def get_only_summary_and_comments(CSV1, CSV2, OID_1, OID_2, Item_ID_column,\
+        summary_column, action_column, comments_column):
+    """Creats a list of just summary and comments.
+        Comments are combined only if the Action column has "Description".
+    ARGS:
+        CSV1: First list of rows
+        CSV2: Second list of rows
+        OID_1: Column number for first CSV's OID
+        OID_2: Column number for second CSV's OID
+        Item_ID_column: Column number for the ItemID
+        summary_column: Column number for the summary
+        action_column: Column number for the action
+        comments_column: Column number for the comments
+
+    return:
+        List of rows where with the itemID, summary, and all comments"""
+
+    #row2 can have multiple instances, append all to single row1
+    outputCSV = []
+    for row1 in CSV1:
+        OID = row1[OID_1] # Saving the OID value of the ticket
+        temp = [row1[Item_ID_column]] # For saving the ItemID
+        temp = temp + [row1[summary_column]] # Add the summary from the first file
+        for row2 in CSV2: # Adding all relevant rows from second file
+            if (row2[OID_2] == OID) and (row2[action_column] == 'Description'):
+                # Add the history data
+                temp = temp + [row2[comments_column]]
+        # Removing all NULL's
+        temp = [item for item in temp if item != 'NULL']
+        # Converting all strings to upper case
+        temp = [item.upper() for item in temp]
+        outputCSV.append(temp)
+
+    return(outputCSV)
+
 def main():
     # Getting the information about the main file
     main_file = input("Please enter the main file: ")
@@ -141,11 +177,28 @@ def main():
     CSV2 = get_rows_from_csv(second_file)
     print("File:[%s] is done" % (second_file))
 
+    if(input("Only summary and comments? [y/N]: ").upper() == 'Y'):
+        summary_column = int(input("Enter the column "
+            "with the summary from the first file: "))
+        action_column = int(input("Enter the column with Action: "))
+        comments_column = int(input("Enter the column with the comments: "))
+
+        output_csv = get_only_summary_and_comments(CSV1, CSV2,\
+                main_OID_column, second_OID_column,  main_Item_ID_column,\
+                summary_column, action_column, comments_column)
+
+        for i in output_csv[:5]:
+            print(i)
+        return()
+
+
 
     print("Combining the files")
     combinedCSV = combine_all_ticket_values(CSV1, CSV2,\
             main_OID_column, second_OID_column, main_Item_ID_column)
     print("Done combining files!")
+
+
 
 
 if __name__ == '__main__':

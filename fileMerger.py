@@ -77,9 +77,10 @@ def combine_all_ticket_values(CSV1, CSV2, OID_1, OID_2, Item_ID_column):
             if row2[OID_2] == OID:
                 # Add the history data
                 temp = temp + row2
-        #TODO: Strip NULL and toUpper all elements in temp
-        #Removing all NULL's
+        # Removing all NULL's
         temp = [item for item in temp if item != 'NULL']
+        # Converting all strings to upper case
+        temp = [item.upper() for item in temp]
         outputCSV.append(temp)
 
     return(outputCSV)

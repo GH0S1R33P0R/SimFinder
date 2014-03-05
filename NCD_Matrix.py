@@ -4,6 +4,7 @@ import zlib
 import os
 import sys
 import codecs
+import csv
 
 def compressionSize(stringIn):
     """Returns the binary length of the compression of stringIn
@@ -42,18 +43,33 @@ def main():
     return()
 
 if __name__ == '__main__':
-    in_filename = input("Please enter a filename for read:")
-    out_filename = input("Please enter a filename for result:")
+    in_filename = input("Please enter a filename for read: ")
+    out_filename = input("Please enter a filename for results: ")
 
+    print("Opening the file for read")
     with codecs.open(in_filename, 'r') as f:
         lines = f.read().splitlines()
+    print("Done")
 
+    print("Calculating NCD")
     total_lines = len(lines)
+
+    output = []
+    for i, row in enumerate(lines):
+        output.append([])
+        for column in lines:
+            output[i].append(getNCD(row, column))
+        print("Row:[" + str(i) + "] out of [" + str(total_lines) + "]")
+
+    print("Done")
+    
+
+    print("Writing to file:")
     with open(out_filename, 'w') as fout:
-        for i, row in enumerate(lines):
-            for column in lines:
-                fout.write(str(getNCD(row, column)) + ", ")
-            fout.write("\n")
-            print("Row:[" + str(i) + "] out of [" + str(total_lines) + "]")
+        writer = csv.writer(fout)
+        for row in output:
+            writer.writerow(row)
+
+    print("Done")
 
     main()

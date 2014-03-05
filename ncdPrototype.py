@@ -3,6 +3,8 @@
 # ncdPrototype.py
 # Basic prototype of using Normalized Compression Distance to compare two strings.
 import zlib
+import bz2
+import lzma
 import csv
 import os
 import sys
@@ -24,7 +26,7 @@ SERVERNAME = None
 
 
 #TODO (Bader): Add level as param for zlib.compress
-def compressionSize(stringIn):
+def compressionSizeGzip(stringIn):
     """Returns the binary length of the compression of stringIn
     ARGS:
         stringIn: string to be analyzed
@@ -37,8 +39,41 @@ def compressionSize(stringIn):
 
     compressed = zlib.compress(bytesIn)
     length = len(compressed)
+    
     return length
 
+def compressionSizeBz2(stringIn):
+    """Returns the binary length of the compression of stringIn
+    ARGS:
+        stringIn: string to be analyzed
+
+    return:
+        int: length of the string after it is compressed"""
+
+    #TODO (Bader): take in binary input from file
+    bytesIn = bytes(stringIn, 'utf-8')
+
+    compressed = bz2.compress(bytesIn)
+    length = len(compressed)
+    
+    return length
+
+def compressionSizeLzma(stringIn):
+    """Returns the binary length of the compression of stringIn
+    ARGS:
+        stringIn: string to be analyzed
+
+    return:
+        int: length of the string after it is compressed"""
+
+    #TODO (Bader): take in binary input from file
+    bytesIn = bytes(stringIn, 'utf-8')
+
+    compressed = lzma.compress(bytesIn)
+    length = len(compressed)
+    
+    return length
+        
 def getNCD(str1, str2):
     """Returns the Normalized compression distance of two strings
     ARGS:
@@ -48,10 +83,10 @@ def getNCD(str1, str2):
         int: The distance according to NCD"""
 
     #Compress str1 and str2 ahead of time
-    compressedStr1 = compressionSize(str1)
-    compressedStr2 = compressionSize(str2)
+    compressedStr1 = compressionSizeGzip(str1)
+    compressedStr2 = compressionSizeGzip(str2)
 
-    NCD_A = compressionSize(str1+str2)
+    NCD_A = compressionSizeGzip(str1+str2)
     NCD_B = min(compressedStr1, compressedStr2)
     NCD_C = max(compressedStr1, compressedStr2)
 
@@ -239,6 +274,7 @@ def main():
     global sizeOfFiles
     global SERVERNAME
 
+        
     #Ask if want to open files in repl
     main_file = input("Please enter the main file:")
 

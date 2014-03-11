@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeniorProject;
+using System.Text;
+using System.Linq;
 
 namespace SeniorProjectTests
 {
@@ -12,7 +14,21 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestIdempotency()
         {
-            Assert.Fail("TODO");
+            ICompressible x = new MockEntity();
+            ICompressible xx = new MockEntity();
+            ICompressible e = new MockEntity();
+
+            x.setData(Encoding.ASCII.GetBytes("Lorem Ipsum Dolor"));
+
+            byte[] doubleArray = x.ToByteArray().Concat(x.ToByteArray()).ToArray();
+            xx.setData(doubleArray);
+
+            e.setData(null); // Empty byte array.
+
+            ISimilarity simTest = new Similarity();
+
+            Assert.IsTrue(simTest.GetComplexity(x) == simTest.GetComplexity(xx));
+            Assert.IsTrue(simTest.GetComplexity(e) == 0);
         }
 
         /// <summary>

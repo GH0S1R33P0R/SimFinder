@@ -8,7 +8,7 @@ namespace SeniorProject
 {
     public class StringCompressible : ICompressible
     {
-        private double complexity;
+        private int complexity;
         private byte[] data;
 
         //Default Constructor
@@ -29,7 +29,7 @@ namespace SeniorProject
             return data;
         }
 
-        double ICompressible.Complexity
+        int ICompressible.Complexity
         {
             get { return this.complexity; }
             set { this.complexity = value; }

@@ -65,6 +65,10 @@ namespace SeniorProject
 
         public int GetComplexity(ICompressible entity)
         {
+            if (entity.Complexity != 0)
+            {
+                return entity.Complexity;
+            }
             int compressedSize; // Used to hold the result
 
             compressedSize = compressionSize(entity.ToByteArray());

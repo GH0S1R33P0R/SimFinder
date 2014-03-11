@@ -27,5 +27,24 @@ namespace SeniorProjectTests
                 return false;
             }
         }
+
+        //Main function to run the acceptance tests
+        static void Main(string[] args)
+        {
+            StringCompressible[] goldenSet = new StringCompressible[11] {
+            new StringCompressible("Unable to start email connector after MR2 install"),
+            new StringCompressible("When using SQL Scripts to Drop Incident Tables to wipe out test tickets - ON CG restart cg_IncidentRequest is not being recreated"),
+            new StringCompressible("ChangeGear not starting"),
+            new StringCompressible("When using SQL Scripts to Drop Incident Tables to wipe out test tickets - ON CG restart cg_IncidentRequest is not being recreated"),
+            new StringCompressible("Email connector is not starting in dev envrionment"),
+            new StringCompressible("Email connector service stopped  not restarting"),
+            new StringCompressible("Email connector service not starting"),
+            new StringCompressible("Error when trying to save - Actual Start Date and End Date being used?"),
+            new StringCompressible("We recently started using the SLA manager and now newly created after action rules are not being applied"),
+            new StringCompressible("email connector service will not start after server reboot"),
+            new StringCompressible("mail Connector Service does not start and has crashed the CGWeb Client")
+            };
+
+        }
     }
 }

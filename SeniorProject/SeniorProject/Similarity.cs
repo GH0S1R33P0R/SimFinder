@@ -41,17 +41,17 @@ namespace SeniorProject
             
             byte[] combinedArray = entity1.Concat(entity2).ToArray();
 
-            int NCD_A = compressionSize(combinedArray);
-            int NCD_B, NCD_C;
+            double NCD_A = (double) compressionSize(combinedArray);
+            double NCD_B, NCD_C;
             if (compressedEntity1 >= compressedEntity2)
             {
-                NCD_B = compressedEntity2;
-                NCD_C = compressedEntity1;
+                NCD_B = (double) compressedEntity2;
+                NCD_C = (double) compressedEntity1;
             }
             else
             {
-                NCD_B = compressedEntity1;
-                NCD_C = compressedEntity2;
+                NCD_B = (double) compressedEntity1;
+                NCD_C = (double) compressedEntity2;
             }
 
             double NCD_result = (NCD_A - NCD_B) / NCD_C;

@@ -25,7 +25,7 @@ namespace SeniorProject
                     // Compress the compressed data.
                     gZipper.Write(uncompressedData, 0, uncompressedData.Length);
                 }
-                compressedSize = (int) compressionStream.Length;
+                compressedSize = (int)compressionStream.Length;
             }
 
             return compressedSize;
@@ -36,9 +36,11 @@ namespace SeniorProject
             int complexityEntity1 = GetComplexity(entity1);
             int complexityEntity2 = GetComplexity(entity2);
 
-            ICompressible combinedEntitys = null; 
+            // Creating the combined ICompressible
+            ICompressible combinedEntitys = null;
+            byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();
+            combinedEntitys.setData(combinedArray);
 
-            // TODO combinedEntitys = entity1 + entity2 ;
             int NCD_A = GetComplexity(combinedEntitys);
             int NCD_B, NCD_C;
             if (complexityEntity1 >= complexityEntity2)

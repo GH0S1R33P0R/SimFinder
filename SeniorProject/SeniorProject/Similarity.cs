@@ -11,25 +11,38 @@ namespace SeniorProject
 {
     public class Similarity : ISimilarity
     {
-        private int complexity;
+        private double threshold;
 
         private int compressionSize(byte[] input)
         {
             int compressedSize = 0;
             byte[] uncompressedData = input;
 
-            // TODO http://msdn.microsoft.com/en-us/library/ms182334.aspx
-            using (MemoryStream compressionStream = new MemoryStream())
+            // http://msdn.microsoft.com/en-us/library/ms182334.aspx
+            MemoryStream compressionStream = null;
+            try
             {
+                compressionStream = new MemoryStream();
+                {
                 // Result goes in compressionStream
                 using (GZipStream gZipper = new GZipStream(compressionStream, CompressionMode.Compress))
                 {
+                        compressionStream = null;
                     // Compress the compressed data.
                     gZipper.Write(uncompressedData, 0, uncompressedData.Length);
                 }
                 compressedSize = (int)compressionStream.Length;
             }
+            }
 
+            finally
+            {
+                if (compressionStream != null)
+                {
+                    compressionStream.Dispose();
+                }
+
+            }
             return compressedSize;
         }
 
@@ -96,6 +109,10 @@ namespace SeniorProject
 
         public int GetComplexity(ICompressible entity)
         {
+            if (entity.Complexity != 0)
+            {
+                return entity.Complexity;
+            }
             int compressedSize; // Used to hold the result
 
             compressedSize = compressionSize(entity.ToByteArray());
@@ -103,31 +120,30 @@ namespace SeniorProject
             return compressedSize;
         }
 
-        public double GetSimilarity(ICompressible entity1, ICompressible entity2)
+        public bool IsSimilar(ICompressible entity1, ICompressible entity2)
         {
-            int complexityEntity1 = GetComplexity(entity1);
-            int complexityEntity2 = GetComplexity(entity2);
-
-            // Creating the combined ICompressible
-            ICompressible combinedEntitys;
-            byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();
-            combinedEntitys = new ICompressible(combinedArray);
-
-            int NCD_A = GetComplexity(combinedEntitys);
-            int NCD_B, NCD_C;
-            if (complexityEntity1 >= complexityEntity2)
+            if (GetSimilarity(entity1, entity2) <= threshold)
             {
-                NCD_B = complexityEntity2;
-                NCD_C = complexityEntity1;
+                return true;
             }
             else
             {
-                NCD_B = complexityEntity1;
-                NCD_C = complexityEntity2;
+                return false;
+            }
+        }
+
+        public int SetComplexity(ref ICompressible entity)
+        {
+            int complexity = GetComplexity(entity);
+            entity.Complexity = complexity;
+            return complexity;
             }
 
-            double NCD_result = (NCD_A - NCD_B) / NCD_C;
-            return NCD_result;
+        public double GetSimilarity(ICompressible entity1, ICompressible entity2)
+        {
+            double ncdResult;
+            ncdResult = getNCD(entity1.ToByteArray(), entity2.ToByteArray());
+            return ncdResult;
         }
 
         public ICompressible[] FindSimilarEntities(ICompressible entity, ICompressible[] dataSet)
@@ -145,7 +161,8 @@ namespace SeniorProject
                 }
             }
 
-            //TODO Sort prior to return
+            similarEntities.Sort();
+
             return similarEntities.ToArray();
         }
     }

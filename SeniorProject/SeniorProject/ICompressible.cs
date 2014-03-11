@@ -12,6 +12,6 @@ namespace SeniorProject
         /// <summary>
         /// Stored complexity value.
         /// </summary>
-        double Complexity { get; set; }
+        int Complexity { get; set; }
     }
 }

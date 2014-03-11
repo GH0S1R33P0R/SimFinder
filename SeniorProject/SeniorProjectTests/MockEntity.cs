@@ -4,7 +4,7 @@ namespace SeniorProjectTests
 {
     class MockEntity: ICompressible
     {
-        private double complexity;
+        private int complexity;
         private byte[] data;
 
         public MockEntity()
@@ -24,7 +24,7 @@ namespace SeniorProjectTests
             return data;
         }
 
-        double ICompressible.Complexity
+        int ICompressible.Complexity
         {
             get { return this.complexity; }
             set { this.complexity = value;}

@@ -49,6 +49,7 @@ namespace SeniorProjectTests
             };
 
             Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[9], goldenSet));
+            Console.Read();
         }
     }
 }

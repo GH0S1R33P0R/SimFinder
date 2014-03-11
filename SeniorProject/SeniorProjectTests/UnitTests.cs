@@ -36,8 +36,8 @@ namespace SeniorProjectTests
             byte[] xData = Encoding.ASCII.GetBytes("Lorem Ipsum Dolor");
             byte[] appendingData = xData.Concat(Encoding.ASCII.GetBytes("sit amet, consectetur adipiscing elit")).ToArray();
 
-            ICompressible xy = new MockEntity();
-            ICompressible x = new MockEntity();
+            ICompressible xy = new MockEntity(appendingData);
+            ICompressible x = new MockEntity(xData);
 
             ISimilarity simTest = new Similarity();
 

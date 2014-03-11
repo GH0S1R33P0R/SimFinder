@@ -11,7 +11,7 @@ namespace SeniorProject
         int GetComplexity(ICompressible entity);
 
         /// <summary>
-        /// Approximate the Kolmogorov Complexity of an entity and sets it.
+        /// Approximate the Kolmogorov Complexity of an entity and sets it on the entity.
         /// </summary>
         /// <param name="entity">A compressable entity</param>
         /// <returns>Return an integer representation of the entity's complexity.</returns>
@@ -36,7 +36,7 @@ namespace SeniorProject
         /// <summary>
         /// Threshold value for similarity.
         /// </summary>
-        void Threshold { get; set; }
+        double Threshold { get; set; }
 
         /// <summary>
         /// Orders a list of enities according to each entities similarity to a given entity.

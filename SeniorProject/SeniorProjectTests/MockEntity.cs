@@ -18,10 +18,7 @@ namespace SeniorProjectTests
 
         byte[] ICompressible.ToByteArray()
         {
-            byte [] toReturn;
-
-            toReturn = new byte [3] {1,2,3};
-            return toReturn;
+            return data;
         }
 
         void ICompressible.setData(byte[] input)

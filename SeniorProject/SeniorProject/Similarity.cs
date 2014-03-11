@@ -11,7 +11,7 @@ namespace SeniorProject
 {
     public class Similarity : ISimilarity
     {
-        public static int GetComplexity(ICompressible entity)
+        public int GetComplexity(ICompressible entity)
         {
             int compressedSize; // Used to hold the result
 

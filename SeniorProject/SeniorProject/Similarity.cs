@@ -57,6 +57,43 @@ namespace SeniorProject
             return NCD_result;
         }
 
+        // MCD(A,B) = max( |c(AB)-c(AA)|, |c(AB)-c(BB)|)/max(c(AA),c(BB))
+        private double getMCD(byte[] entity1, byte[] entity2)
+        {
+            int MCD_numerator;
+            double MCD_result;
+            
+            // Find c(AA) and c(BB)
+            int MCD_AA = compressionSize(entity1.Concat(entity1).ToArray());
+            int MCD_BB = compressionSize(entity2.Concat(entity2).ToArray());
+
+            // Find c(AB)
+            byte[] combinedArray = entity1.Concat(entity2).ToArray();
+            int MCD_AB = compressionSize(combinedArray);
+
+            // Find max( |c(AB)-c(AA)|, |c(AB)-c(BB)|)
+            if (Math.Abs(MCD_AB - MCD_AA) >= Math.Abs(MCD_AB - MCD_BB))
+            {
+                MCD_numerator = Math.Abs(MCD_AB - MCD_AA);
+            }
+            else
+            {
+                MCD_numerator = Math.Abs(MCD_AB - MCD_BB);
+            }
+
+            // Find MCD(A,B)
+            if (MCD_AA >= MCD_BB)
+            {
+                MCD_result = (MCD_numerator / MCD_AA);
+            }
+            else
+            {
+                MCD_result = (MCD_numerator / MCD_BB);
+            }
+
+            return MCD_result;
+        }
+
         public int GetComplexity(ICompressible entity)
         {
             int compressedSize; // Used to hold the result

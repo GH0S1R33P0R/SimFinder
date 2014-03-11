@@ -72,6 +72,18 @@ namespace SeniorProject
             return compressedSize;
         }
 
+        public bool IsSimilar(ICompressible entity1, ICompressible entity2)
+        {
+            if (GetSimilarity(entity1, entity2) <= threshold)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public int SetComplexity(ref ICompressible entity)
         {
             int complexity = GetComplexity(entity);

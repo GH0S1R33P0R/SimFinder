@@ -19,6 +19,19 @@ namespace SeniorProject
         double GetSimilarity(ICompressible entity1, ICompressible entity2);
 
         /// <summary>
+        /// Returns true if two entitys are similar.
+        /// </summary>
+        /// <param name="entity1">The first entity.</param>
+        /// <param name="entity">The second entity.</param>
+        /// <returns></returns>
+        bool isSimilar(ICompressible entity1, ICompressible entity);
+
+        /// <summary>
+        /// Set the Threshold value.
+        /// </summary>
+        /// <param name="threshold">The new threshold</param>
+        void setThreshold(float threshold);
+        /// <summary>
         /// Orders a list of enities according to each entities similarity to a given entity.
         /// </summary>
         /// <param name="entity">A compressable entity</param>

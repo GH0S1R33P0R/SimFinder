@@ -14,7 +14,7 @@ namespace SeniorProjectTests
             //Similarity object to use for FindSimilarEntities
             Similarity simTest = new Similarity(); 
 
-            //Get the order results and return if they match is present
+            //Get the ordered results and return if the match is present
             ICompressible[] results = simTest.FindSimilarEntities(testTicket, dataSet);
 
             if(results.Contains(potentialMatch))

@@ -31,6 +31,9 @@ namespace SeniorProjectTests
         //Main function to run the acceptance tests
         static void Main(string[] args)
         {
+            AcceptanceTests tester = new AcceptanceTests();
+
+            //Create the golden set as an array of StringCompressible objects
             StringCompressible[] goldenSet = new StringCompressible[11] {
             new StringCompressible("Unable to start email connector after MR2 install"),
             new StringCompressible("When using SQL Scripts to Drop Incident Tables to wipe out test tickets - ON CG restart cg_IncidentRequest is not being recreated"),
@@ -45,6 +48,7 @@ namespace SeniorProjectTests
             new StringCompressible("mail Connector Service does not start and has crashed the CGWeb Client")
             };
 
+            Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[9], goldenSet));
         }
     }
 }

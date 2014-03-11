@@ -6,7 +6,12 @@ namespace SeniorProjectTests
     {
         private byte[] data;
 
-        MockEntity(byte[] data)
+        public MockEntity()
+        {
+
+        }
+
+        public MockEntity(byte[] data)
         {
             this.data = data;
         }

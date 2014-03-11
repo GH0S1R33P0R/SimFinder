@@ -18,28 +18,16 @@ namespace SeniorProject
             int compressedSize = 0;
             byte[] uncompressedData = input;
 
-            // http://msdn.microsoft.com/en-us/library/ms182334.aspx
-            MemoryStream compressionStream = null;
-            try
+            // http://msdn.microsoft.com/en-us/library/ms182334.aspx LIES
+            using (MemoryStream compressionStream = new MemoryStream())
             {
-                compressionStream = new MemoryStream();
                 // Result goes in compressionStream
                 using (GZipStream gZipper = new GZipStream(compressionStream, CompressionMode.Compress))
                 {
-                        compressionStream = null;
                     // Compress the compressed data.
                     gZipper.Write(uncompressedData, 0, uncompressedData.Length);
+                    compressedSize = (int)compressionStream.Length;
                 }
-                compressedSize = (int)compressionStream.Length;
-            }
-
-            finally
-            {
-                if (compressionStream != null)
-                {
-                    compressionStream.Dispose();
-                }
-
             }
             return compressedSize;
         }

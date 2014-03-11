@@ -24,13 +24,14 @@ namespace SeniorProject
         /// <param name="entity1">The first entity.</param>
         /// <param name="entity">The second entity.</param>
         /// <returns></returns>
-        bool isSimilar(ICompressible entity1, ICompressible entity);
+        bool IsSimilar(ICompressible entity1, ICompressible entity);
 
         /// <summary>
         /// Set the Threshold value.
         /// </summary>
-        /// <param name="threshold">The new threshold</param>
-        void setThreshold(float threshold);
+        /// <param name="threshold">The new threshold.</param>
+        void Threshold { get; set; }
+
         /// <summary>
         /// Orders a list of enities according to each entities similarity to a given entity.
         /// </summary>

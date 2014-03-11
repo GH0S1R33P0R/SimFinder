@@ -13,11 +13,10 @@ namespace SeniorProject
     {
         private int complexity;
 
-        public int GetComplexity(ICompressible entity)
+        private int compressionSize(byte[] input)
         {
-            int compressedSize; // Used to hold the result
-
-            byte[] uncompressedData = entity.ToByteArray();
+            int compressedSize = 0;
+            byte[] uncompressedData = input;
 
             // TODO http://msdn.microsoft.com/en-us/library/ms182334.aspx
             using (MemoryStream compressionStream = new MemoryStream())
@@ -34,15 +33,24 @@ namespace SeniorProject
             return compressedSize;
         }
 
-        public int GetSimilarity(ICompressible entity1, ICompressible entity2)
+        public int GetComplexity(ICompressible entity)
+        {
+            int compressedSize; // Used to hold the result
+
+            compressedSize = compressionSize(entity.ToByteArray());
+
+            return compressedSize;
+        }
+
+        public double GetSimilarity(ICompressible entity1, ICompressible entity2)
         {
             int complexityEntity1 = GetComplexity(entity1);
             int complexityEntity2 = GetComplexity(entity2);
 
             // Creating the combined ICompressible
-            ICompressible combinedEntitys = null;
+            ICompressible combinedEntitys;
             byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();
-            combinedEntitys.setData(combinedArray);
+            combinedEntitys = new ICompressible(combinedArray);
 
             int NCD_A = GetComplexity(combinedEntitys);
             int NCD_B, NCD_C;

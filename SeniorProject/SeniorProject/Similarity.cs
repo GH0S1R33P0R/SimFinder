@@ -35,8 +35,26 @@ namespace SeniorProject
 
         private double getNCD(byte[] entity1, byte[] entity2)
         {
-            //TODO Implement
-            return 0.0;
+            int compressedEntity1 = compressionSize(entity1);
+            int compressedEntity2 = compressionSize(entity2);
+            
+            byte[] combinedArray = entity1.Concat(entity2).ToArray();
+
+            int NCD_A = compressionSize(combinedArray);
+            int NCD_B, NCD_C;
+            if (compressedEntity1 >= compressedEntity2)
+            {
+                NCD_B = compressedEntity2;
+                NCD_C = compressedEntity1;
+            }
+            else
+            {
+                NCD_B = compressedEntity1;
+                NCD_C = compressedEntity2;
+            }
+
+            double NCD_result = (NCD_A - NCD_B) / NCD_C;
+            return NCD_result;
         }
 
         public int GetComplexity(ICompressible entity)

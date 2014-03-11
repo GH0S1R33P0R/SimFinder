@@ -27,9 +27,8 @@ namespace SeniorProject
         bool IsSimilar(ICompressible entity1, ICompressible entity);
 
         /// <summary>
-        /// Set the Threshold value.
+        /// Threshold value for similarity.
         /// </summary>
-        /// <param name="threshold">The new threshold.</param>
         void Threshold { get; set; }
 
         /// <summary>

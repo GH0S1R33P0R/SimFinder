@@ -9,10 +9,9 @@ namespace SeniorProject
         /// <returns>Returns a byte[] representation of the entity.</returns>
         byte[] ToByteArray();
 
-        // TODO: Can this be nullable?
         /// <summary>
         /// Stored complexity value.
         /// </summary>
-        void Complexity { get; set; }
+        double Complexity { get; set; }
     }
 }

@@ -33,6 +33,12 @@ namespace SeniorProject
             return compressedSize;
         }
 
+        private double getNCD(byte[] entity1, byte[] entity2)
+        {
+            //TODO Implement
+            return 0.0;
+        }
+
         public int GetComplexity(ICompressible entity)
         {
             int compressedSize; // Used to hold the result

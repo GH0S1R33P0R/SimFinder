@@ -88,7 +88,8 @@ namespace SeniorProject
                 }
             }
 
-            //TODO Sort prior to return
+            similarEntities.Sort();
+
             return similarEntities.ToArray();
         }
     }

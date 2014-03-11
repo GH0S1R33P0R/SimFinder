@@ -32,13 +32,13 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestMonotonicity()
         {
+
+            byte[] xData = Encoding.ASCII.GetBytes("Lorem Ipsum Dolor");
+            byte[] appendingData = xData.Concat(Encoding.ASCII.GetBytes("sit amet, consectetur adipiscing elit")).ToArray();
+
             ICompressible xy = new MockEntity();
             ICompressible x = new MockEntity();
 
-            x.setData(Encoding.ASCII.GetBytes("Lorem Ipsum Dolor"));
-
-            byte[] appendingString = Encoding.ASCII.GetBytes("sit amet, consectetur adipiscing elit");
-            xy.setData(x.ToByteArray().Concat(appendingString).ToArray());
 
             ISimilarity simTest = new Similarity();
 

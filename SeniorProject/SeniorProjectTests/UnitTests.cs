@@ -56,7 +56,18 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestSymmetry()
         {
-            Assert.Fail("TODO");
+            ICompressible Forward = new MockEntity();
+            ICompressible Backward = new MockEntity();
+
+            string testString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            string reversedString = new string(testString.ToCharArray().Reverse().ToArray());
+
+            Forward.setData(Encoding.ASCII.GetBytes(testString));
+            Backward.setData(Encoding.ASCII.GetBytes(reversedString));
+
+            ISimilarity simTest = new Similarity();
+
+            Assert.IsTrue(simTest.GetComplexity(Forward) == simTest.GetComplexity(Backward));
         }
 
         /// <summary>

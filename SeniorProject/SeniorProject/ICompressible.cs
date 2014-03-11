@@ -10,10 +10,9 @@ namespace SeniorProject
         byte[] ToByteArray();
 
         /// <summary>
-        /// Returns a new ICompressible that contains the first ICompressible followed by the second.
+        /// Sets the data of an ICompressible
         /// </summary>
-        /// <param name="input">ICompressible to be appended.</param>
-        /// <returns>The resulting ICompressible.</returns>
-        ICompressible append(ICompressible input );
+        /// <param name="input"></param>
+        void setData(byte[] input);
     }
 }

@@ -39,7 +39,6 @@ namespace SeniorProjectTests
             ICompressible xy = new MockEntity();
             ICompressible x = new MockEntity();
 
-
             ISimilarity simTest = new Similarity();
 
             Assert.IsTrue(simTest.GetComplexity(xy) >= simTest.GetComplexity(x));
@@ -51,18 +50,15 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestSymmetry()
         {
-            ICompressible Forward = new MockEntity();
-            ICompressible Backward = new MockEntity();
+            byte[] xData = Encoding.ASCII.GetBytes("Lorem ipsum dolor sit amet,");
+            byte[] yData = Encoding.ASCII.GetBytes(" consectetur adipiscing elit.");
 
-            string testString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            string reversedString = new string(testString.ToCharArray().Reverse().ToArray());
-
-            Forward.setData(Encoding.ASCII.GetBytes(testString));
-            Backward.setData(Encoding.ASCII.GetBytes(reversedString));
+            ICompressible forward = new MockEntity(xData.Concat(yData).ToArray());
+            ICompressible backward = new MockEntity(yData.Concat(xData).ToArray());
 
             ISimilarity simTest = new Similarity();
 
-            Assert.IsTrue(simTest.GetComplexity(Forward) == simTest.GetComplexity(Backward));
+            Assert.IsTrue(simTest.GetComplexity(forward) == simTest.GetComplexity(backward));
         }
 
         /// <summary>

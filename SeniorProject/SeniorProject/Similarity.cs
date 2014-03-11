@@ -22,10 +22,12 @@ namespace SeniorProject
             using (MemoryStream compressionStream = new MemoryStream())
             {
                 // Result goes in compressionStream
-                using (GZipStream gZipper = new GZipStream(compressionStream, CompressionMode.Compress))
+                using (GZipStream gZipper = new GZipStream(compressionStream, CompressionMode.Compress,true ))
                 {
                     // Compress the compressed data.
                     gZipper.Write(uncompressedData, 0, uncompressedData.Length);
+                    gZipper.Flush();
+                    gZipper.Close();
                     compressedSize = (int)compressionStream.Length;
                 }
             }

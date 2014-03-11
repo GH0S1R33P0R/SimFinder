@@ -37,7 +37,17 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestMonotonicity()
         {
-            Assert.Fail("TODO");
+            ICompressible xy = new MockEntity();
+            ICompressible x = new MockEntity();
+
+            x.setData(Encoding.ASCII.GetBytes("Lorem Ipsum Dolor"));
+
+            byte[] appendingString = Encoding.ASCII.GetBytes("sit amet, consectetur adipiscing elit");
+            xy.setData(x.ToByteArray().Concat(appendingString).ToArray());
+
+            ISimilarity simTest = new Similarity();
+
+            Assert.IsTrue(simTest.GetComplexity(xy) >= simTest.GetComplexity(x));
         }
 
         /// <summary>

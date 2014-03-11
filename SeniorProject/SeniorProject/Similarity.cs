@@ -27,11 +27,12 @@ namespace SeniorProject
                     // Result goes in compressionStream
                     using (GZipStream gZipper = new GZipStream(compressionStream, CompressionMode.Compress))
                     {
-                        compressionStream = null;
                         // Compress the compressed data.
                         gZipper.Write(uncompressedData, 0, uncompressedData.Length);
                     }
                     compressedSize = (int)compressionStream.Length;
+                    compressionStream = null;
+
                 }
             }
 

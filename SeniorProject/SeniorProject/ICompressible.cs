@@ -9,10 +9,10 @@ namespace SeniorProject
         /// <returns>Returns a byte[] representation of the entity.</returns>
         byte[] ToByteArray();
 
+        // TODO: Can this be nullable?
         /// <summary>
-        /// Sets the data of an ICompressible
+        /// Stored complexity value.
         /// </summary>
-        /// <param name="input"></param>
-        void setData(byte[] input);
+        void Complexity { get; set; }
     }
 }

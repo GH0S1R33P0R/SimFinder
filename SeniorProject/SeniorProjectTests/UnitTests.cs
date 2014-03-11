@@ -14,16 +14,11 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestIdempotency()
         {
-            ICompressible x = new MockEntity();
-            ICompressible xx = new MockEntity();
-            ICompressible e = new MockEntity();
-
-            x.setData(Encoding.ASCII.GetBytes("Lorem Ipsum Dolor"));
+            ICompressible x = new MockEntity(Encoding.ASCII.GetBytes("Lorem Ipsum Dolor"));
 
             byte[] doubleArray = x.ToByteArray().Concat(x.ToByteArray()).ToArray();
-            xx.setData(doubleArray);
-
-            e.setData(null); // Empty byte array.
+            ICompressible xx = new MockEntity(doubleArray);
+            ICompressible e = new MockEntity();
 
             ISimilarity simTest = new Similarity();
 

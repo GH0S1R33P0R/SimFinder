@@ -105,6 +105,13 @@ namespace SeniorProject
             return MCD_result;
         }
 
+        double ISimilarity.Threshold
+        {
+            get { return this.threshold; }
+            set { this.threshold = value; }
+        }
+
+
         public int GetComplexity(ICompressible entity)
         {
             if (entity.Complexity != 0)

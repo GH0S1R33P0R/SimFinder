@@ -53,6 +53,7 @@ namespace SeniorProject
             }
 
             double NCD_result = (NCD_A - NCD_B) / NCD_C;
+            Console.WriteLine("NCD A: {0}, NCD B: {1}, NCD C: {2}", NCD_A, NCD_B, NCD_C);
             return NCD_result;
         }
 
@@ -151,10 +152,11 @@ namespace SeniorProject
                 if (similarityVal < similarityThreshold)
                 {
                     similarEntities.Add(entity2);
+                    Console.WriteLine("NCD value: {0}", similarityVal);
                 }
             }
 
-            similarEntities.Sort();
+            //similarEntities.Sort();
 
             return similarEntities.ToArray();
         }

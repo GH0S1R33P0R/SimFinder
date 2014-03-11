@@ -67,7 +67,18 @@ namespace SeniorProjectTests
         [TestMethod]
         public void TestDistributivity()
         {
-            Assert.Fail("TODO");
+            byte[] xData = Encoding.ASCII.GetBytes("Lorem ipsum dolor sit amet,");
+            byte[] yData = Encoding.ASCII.GetBytes(" consectetur adipiscing elit.");
+            byte[] zData = Encoding.ASCII.GetBytes("Suspendisse porttitor lectus");
+
+            ICompressible xy = new MockEntity(xData.Concat(yData).ToArray());
+            ICompressible xz = new MockEntity(xData.Concat(zData).ToArray());
+            ICompressible z = new MockEntity(zData);
+            ICompressible yz = new MockEntity(yData.Concat(zData).ToArray());
+
+            ISimilarity simTest = new Similarity();
+
+            Assert.IsTrue(simTest.GetComplexity(xy) + simTest.GetComplexity(z) <= simTest.GetComplexity(xz) + simTest.GetComplexity(yz));
         }
     }
 }

@@ -11,7 +11,9 @@ namespace SeniorProject
 {
     public class Similarity : ISimilarity
     {
-        public int GetComplexity(ICompressible entity)
+        private double complexity;
+
+        public double GetComplexity(ICompressible entity)
         {
             int compressedSize; // Used to hold the result
 
@@ -73,6 +75,8 @@ namespace SeniorProject
                     similarEntities.Add(entity2);
                 }
             }
+
+            //TODO Sort prior to return
             return similarEntities.ToArray();
         }
     }

@@ -4,16 +4,19 @@ namespace SeniorProjectTests
 {
     class MockEntity: ICompressible
     {
+        private double complexity;
         private byte[] data;
 
         public MockEntity()
         {
-
+            data = null;
+            complexity = 0;
         }
 
         public MockEntity(byte[] data)
         {
             this.data = data;
+            complexity = 0;
         }
 
         byte[] ICompressible.ToByteArray()
@@ -21,9 +24,10 @@ namespace SeniorProjectTests
             return data;
         }
 
-        void ICompressible.setData(byte[] input)
+        double ICompressible.Complexity
         {
-            this.data = input;
+            get { return this.complexity; }
+            set { this.complexity = value;}
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SeniorProject
 {
     public class Similarity : ISimilarity
     {
-        private int complexity;
+        private double threshold;
 
         private int compressionSize(byte[] input)
         {
@@ -57,6 +57,12 @@ namespace SeniorProject
             return NCD_result;
         }
 
+        double ISimilarity.Threshold
+        {
+            get { return this.threshold; }
+            set { this.threshold = value; }
+        }
+
         public int GetComplexity(ICompressible entity)
         {
             int compressedSize; // Used to hold the result
@@ -64,6 +70,13 @@ namespace SeniorProject
             compressedSize = compressionSize(entity.ToByteArray());
 
             return compressedSize;
+        }
+
+        public int SetComplexity(ref ICompressible entity)
+        {
+            int complexity = GetComplexity(entity);
+            entity.Complexity = complexity;
+            return complexity;
         }
 
         public double GetSimilarity(ICompressible entity1, ICompressible entity2)

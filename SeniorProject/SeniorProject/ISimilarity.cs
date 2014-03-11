@@ -15,7 +15,7 @@ namespace SeniorProject
         /// </summary>
         /// <param name="entity">A compressable entity</param>
         /// <returns>Return an integer representation of the entity's complexity.</returns>
-        int SetComplexity(ICompressible entity);
+        int SetComplexity(ref ICompressible entity);
 
         /// <summary>
         /// Approximate the Normalized Information Distance between two entities.

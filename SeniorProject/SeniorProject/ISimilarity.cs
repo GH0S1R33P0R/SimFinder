@@ -11,6 +11,13 @@ namespace SeniorProject
         int GetComplexity(ICompressible entity);
 
         /// <summary>
+        /// Approximate the Kolmogorov Complexity of an entity and sets it.
+        /// </summary>
+        /// <param name="entity">A compressable entity</param>
+        /// <returns>Return an integer representation of the entity's complexity.</returns>
+        int SetComplexity(ICompressible entity);
+
+        /// <summary>
         /// Approximate the Normalized Information Distance between two entities.
         /// </summary>
         /// <param name="entity1">A compressable entity</param>

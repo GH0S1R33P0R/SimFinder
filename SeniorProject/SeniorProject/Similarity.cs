@@ -17,6 +17,7 @@ namespace SeniorProject
 
             byte[] uncompressedData = entity.ToByteArray();
 
+            // TODO http://msdn.microsoft.com/en-us/library/ms182334.aspx
             using (MemoryStream compressionStream = new MemoryStream())
             {
                 // Result goes in compressionStream

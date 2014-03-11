@@ -50,29 +50,9 @@ namespace SeniorProject
 
         public double GetSimilarity(ICompressible entity1, ICompressible entity2)
         {
-            int complexityEntity1 = GetComplexity(entity1);
-            int complexityEntity2 = GetComplexity(entity2);
-
-            // Creating the combined ICompressible
-            ICompressible combinedEntitys;
-            byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();
-            combinedEntitys = new ICompressible(combinedArray);
-
-            int NCD_A = GetComplexity(combinedEntitys);
-            int NCD_B, NCD_C;
-            if (complexityEntity1 >= complexityEntity2)
-            {
-                NCD_B = complexityEntity2;
-                NCD_C = complexityEntity1;
-            }
-            else
-            {
-                NCD_B = complexityEntity1;
-                NCD_C = complexityEntity2;
-            }
-
-            double NCD_result = (NCD_A - NCD_B) / NCD_C;
-            return NCD_result;
+            double ncdResult;
+            ncdResult = getNCD(entity1.ToByteArray(), entity2.ToByteArray());
+            return ncdResult;
         }
 
         public ICompressible[] FindSimilarEntities(ICompressible entity, ICompressible[] dataSet)

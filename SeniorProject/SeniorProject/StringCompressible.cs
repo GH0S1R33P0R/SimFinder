@@ -15,7 +15,7 @@ namespace SeniorProject
         public StringCompressible()
         {
             complexity = 0;
-            data = null;
+            data = new byte[0];
         }
        
         //Constructor that takes string data

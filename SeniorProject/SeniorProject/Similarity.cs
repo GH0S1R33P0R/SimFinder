@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,12 +33,13 @@ namespace SeniorProject
 
         public double GetSimilarity(ICompressible entity1, ICompressible entity2)
         {
-            int complexityEntity1 = this.GetComplexity(entity1);
-            int complexityEntity2 = this.GetComplexity(entity2);
+            int complexityEntity1 = GetComplexity(entity1);
+            int complexityEntity2 = GetComplexity(entity2);
 
-            byte[] combinedEntitys;
-            combinedEntitys = entity1.ToByteArray().Concat(entity2.ToByteArray());
-            int NCD_A = this.GetComplexity(entity1.ToByteArray() + entity2.ToByteArray); //TODO: Create a function for '+' operation
+            ICompressible combinedEntitys = null; 
+
+            // TODO combinedEntitys = entity1 + entity2 ;
+            int NCD_A = GetComplexity(combinedEntitys);
             int NCD_B, NCD_C;
             if (complexityEntity1 >= complexityEntity2)
             {
@@ -58,12 +60,14 @@ namespace SeniorProject
         {
             List<ICompressible> similarEntities = new List<ICompressible>();
             double similarityVal;
+            double similarityThreshold = 0.35;
+
             foreach (ICompressible entity2 in dataSet)
             {
                 similarityVal = GetSimilarity(entity, entity2);
-                if (similarityVal < 0.35)
+                if (similarityVal < similarityThreshold)
                 {
-                    similarEntities.add(entity2);
+                    similarEntities.Add(entity2);
                 }
             }
             return similarEntities.ToArray();

@@ -48,31 +48,27 @@ namespace SeniorProjectTests
             new StringCompressible("mail Connector Service does not start and has crashed the CGWeb Client")
             };
 
-            //Check the known duplicates for ticket #1 in goldenSet (IR-0026018)
-            //Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[9], goldenSet));
-            //Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[6], goldenSet));
-            //Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[4], goldenSet));
-            //Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[5], goldenSet));
-            //Console.Write(tester.ContainsMatch(goldenSet[0], goldenSet[10], goldenSet));
-
-            //Check the known duplicates for ticket #1 in goldenSet (IR-0026018)
-
+            //Check each of the 11 tickets against each other and print true if ncd value < threshhold, false otherwise
             int i = 0;
             int j = 0;
 
             foreach (StringCompressible element1 in goldenSet)
             {
+                Console.Write("Ticket #{0} matches: ", i + 1);
                 foreach (StringCompressible element2 in goldenSet)
                 {
-                    Console.Write("Ticket {0} vs ticket {1}: ", i, j);
-                    Console.WriteLine(tester.ContainsMatch(element1, element2, goldenSet));
+                    if (tester.ContainsMatch(element1, element2, goldenSet) && i != j)
+                    {
+                        Console.Write("{0}, ", j + 1);
+                    }
                     j++;
                 }
+                Console.WriteLine();
                 j = 0;
                 i++;
             }
 
-            Console.Read();
+            Console.Read(); //Prevents the console from closing
         }
     }
 }

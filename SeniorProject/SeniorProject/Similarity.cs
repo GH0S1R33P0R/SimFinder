@@ -145,7 +145,7 @@ namespace SeniorProject
         {
             List<ICompressible> similarEntities = new List<ICompressible>();
             double similarityVal;
-            double similarityThreshold = 0.35;
+            double similarityThreshold = 0.44;
 
             foreach (ICompressible entity2 in dataSet)
             {

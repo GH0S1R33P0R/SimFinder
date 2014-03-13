@@ -127,12 +127,12 @@ namespace SeniorProject
             }
         }
 
-        public int SetComplexity(ref ICompressible entity)
+        public int SetComplexity(ICompressible entity)
         {
             int complexity = GetComplexity(entity);
             entity.Complexity = complexity;
             return complexity;
-            }
+        }
 
         public double GetSimilarity(ICompressible entity1, ICompressible entity2)
         {

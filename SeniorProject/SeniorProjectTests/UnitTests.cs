@@ -94,6 +94,7 @@ namespace SeniorProjectTests
             //Create the data set as a list of StringCompressible objects
             List<StringCompressible> DataSet = new List<StringCompressible>();
 
+            //Open the CSV to read in the data set
             string currentDirectory = Directory.GetCurrentDirectory();
             var CSVReader = new StreamReader(File.OpenRead(Path.Combine(currentDirectory, "IncidentRequest_Gold.csv")));
 
@@ -104,6 +105,9 @@ namespace SeniorProjectTests
                 var data = row.Split(',');
                 DataSet.Add(new StringCompressible(data[0], data[1]));
             }
+
+            //Open log file for writing 
+            var logFile = new StreamWriter(Path.Combine(currentDirectory, "TestDetection_Log.txt"));
 
             //Create the expected outcome 2D list
             List<List<string>> expectedLists = new List<List<string>>();
@@ -204,16 +208,16 @@ namespace SeniorProjectTests
             foreach(StringCompressible ticket in DataSet)
             {
                ICompressible[] results = simTest.FindSimilarEntities(ticket, DataSet.ToArray());
-               Console.WriteLine("Matches for itemID {0}", expectedLists[currentList][0]);
+               logFile.Write("{0} Matches: ", expectedLists[currentList][0]);
                foreach (StringCompressible expectedMatch in results)
                {
-                   Console.Write("{0}, ", expectedMatch.ItemID);
+                   logFile.Write("{0}, ", expectedMatch.ItemID);
                    Assert.IsTrue(expectedLists[currentList].Contains(expectedMatch.ItemID));
                }
                currentList++;
-               Console.WriteLine('\n');
+               logFile.WriteLine();
             }
-
+            logFile.Close();
         }
     }
 }

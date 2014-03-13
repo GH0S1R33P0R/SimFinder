@@ -213,12 +213,17 @@ namespace SeniorProjectTests
                {
                    logFile.Write("{0} ", expectedMatch.ItemID);
                    logFile.Write("({0}), ", expectedLists[currentList].Contains(expectedMatch.ItemID));
-                   Assert.IsTrue(expectedLists[currentList].Contains(expectedMatch.ItemID));
                }
                currentList++;
                logFile.WriteLine();
             }
             logFile.Close();
+            
+            //Read the log file and assert that there are no false positives
+            var logReader = new StreamReader(File.OpenRead(Path.Combine(currentDirectory, "TestDetection_Log.txt")));
+            string log = logReader.ReadToEnd();
+            logReader.Close();
+            Assert.IsFalse(log.Contains("False"));
         }
     }
 }

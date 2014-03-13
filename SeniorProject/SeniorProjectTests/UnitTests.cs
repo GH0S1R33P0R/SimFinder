@@ -201,12 +201,15 @@ namespace SeniorProjectTests
             Similarity simTest = new Similarity();
 
             //Get the ordered results and return if the match is present
-            ICompressible[] results = new ICompressible[6];
-
             foreach(StringCompressible ticket in DataSet)
             {
-                results = simTest.FindSimilarEntities(ticket, DataSet.ToArray());
-                
+               int i = 0;
+               ICompressible[] results = simTest.FindSimilarEntities(ticket, DataSet.ToArray());
+               foreach (ICompressible expectedMatch in results)
+               {
+                   Console.Write(expectedLists[i].Contains(expectedMatch.ItemID));
+               }
+               i++;
             }
 
         }

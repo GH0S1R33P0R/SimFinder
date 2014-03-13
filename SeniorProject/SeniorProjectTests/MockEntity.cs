@@ -6,6 +6,7 @@ namespace SeniorProjectTests
     {
         private int complexity;
         private byte[] data;
+        private string itemID;
 
         public MockEntity()
         {
@@ -28,6 +29,12 @@ namespace SeniorProjectTests
         {
             get { return this.complexity; }
             set { this.complexity = value;}
+        }
+
+        string ICompressible.ItemID
+        {
+            get { return this.itemID; }
+            set { this.itemID = value; }
         }
     }
 }

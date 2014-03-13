@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeniorProject;
+using System.IO;
 
 namespace SeniorProjectAnalytics
 {
     class Analysis
     {
-        private ISimilarity isSim;
-        private ICompressible[] inputs;
-        private ICompressible[] output;
+        private static ISimilarity isSim;
+        private static TicketCompressible[] inputs;
+        private static ICompressible[] output;
 
         /// <summary>
         /// Read file "input.txt" and set list of TicketCompressible items.
@@ -19,7 +20,36 @@ namespace SeniorProjectAnalytics
         /// <param name="entitys">Array of Ticket to be overwritten.</param>
         public void ObtainTickets(ref TicketCompressible[] entitys)
         {
-            // TODO: implement
+            var inputFile = "input.csv";
+            var tickets = new List<TicketCompressible>();
+
+            using (var r = new StreamReader(inputFile))
+            {
+                string line;
+                string[] itemsInLine;
+                string id;
+                string summary;
+
+
+                // Skip the header line
+                r.ReadLine();
+
+                while ((line = r.ReadLine()) != null)
+                {
+                    // Parse line
+                    itemsInLine = line.Split(',');
+                    id = itemsInLine[1];
+                    summary = itemsInLine[2];
+
+                    TicketCompressible ticket = new TicketCompressible(summary, id);
+
+                    isSim.SetComplexity(ticket);
+
+                    tickets.Add(ticket);
+                }
+            }
+
+            entitys = tickets.ToArray();
         }
 
         /// <summary>
@@ -34,11 +64,15 @@ namespace SeniorProjectAnalytics
             return entityList;
         }
 
-        public void Main(string[] args )
+        static void Main(string[] args )
         {
-            // TODO: implement
+            Analysis analytics = new Analysis();
+            isSim = new Similarity();
 
-            // TODO: ObtainTickets
+            inputs = new TicketCompressible[0];
+            analytics.ObtainTickets(ref inputs);
+
+            // Now each element in inputs has itemID, summary, and complexity.
 
             // TODO: FindSimilars for each ticket and write to file
         }

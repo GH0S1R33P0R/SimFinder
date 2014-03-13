@@ -196,6 +196,19 @@ namespace SeniorProjectTests
             expectedMatch11.Add("IR-0027625");
             expectedMatch11.Add("IR-0026018");
             expectedLists.Add(expectedMatch11);
+
+            //Similarity object to use for FindSimilarEntities
+            Similarity simTest = new Similarity();
+
+            //Get the ordered results and return if the match is present
+            ICompressible[] results = new ICompressible[6];
+
+            foreach(StringCompressible ticket in DataSet)
+            {
+                results = simTest.FindSimilarEntities(ticket, DataSet.ToArray());
+                
+            }
+
         }
     }
 }

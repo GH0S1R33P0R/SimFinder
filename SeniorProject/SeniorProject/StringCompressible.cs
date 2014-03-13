@@ -32,6 +32,11 @@ namespace SeniorProject
             itemID = ID;
         }
 
+        public string ItemID()
+        {
+            return itemID;
+        }
+
         byte[] ICompressible.ToByteArray()
         {
             return data;

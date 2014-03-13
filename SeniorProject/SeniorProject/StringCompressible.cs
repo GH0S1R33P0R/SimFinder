@@ -32,20 +32,26 @@ namespace SeniorProject
             itemID = ID;
         }
 
-        public string ItemID()
-        {
-            return itemID;
-        }
-
         byte[] ICompressible.ToByteArray()
         {
             return data;
+        }
+
+        public string ItemID()
+        {
+            return itemID;
         }
 
         int ICompressible.Complexity
         {
             get { return this.complexity; }
             set { this.complexity = value; }
+        }
+
+        string ICompressible.ItemID
+        {
+            get {return this.itemID; }
+            set { this.itemID = value; }
         }
     }
 }

@@ -143,7 +143,7 @@ namespace SeniorProject
 
         public ICompressible[] FindSimilarEntities(ICompressible entity, ICompressible[] dataSet)
         {
-            List<ICompressible> similarEntities = new List<ICompressible>();
+            List<Tuple<double, ICompressible>> similarEntities = new List<Tuple<double, ICompressible>>();
             double similarityVal;
             double similarityThreshold = 0.44;
 
@@ -152,13 +152,13 @@ namespace SeniorProject
                 similarityVal = GetSimilarity(entity, entity2);
                 if (similarityVal < similarityThreshold)
                 {
-                    similarEntities.Add(entity2);
+                    similarEntities.Add(new Tuple<double, ICompressible>(similarityVal,entity2));
                 }
             }
 
-            //similarEntities.Sort();
+            similarEntities.Sort((a, b) => a.Item1.CompareTo(b.Item1));
 
-            return similarEntities.ToArray();
+            return similarEntities.Select(t => t.Item2).ToArray();
         }
     }
 }

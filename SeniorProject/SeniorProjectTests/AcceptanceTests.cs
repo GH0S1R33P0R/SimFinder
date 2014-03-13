@@ -54,12 +54,12 @@ namespace SeniorProjectTests
 
             foreach (StringCompressible element1 in goldenSet)
             {
-                Console.Write("{0} matches: ", goldenSet[i].ItemID());
+                Console.Write("{0} matches: ", goldenSet[i].ItemID);
                 foreach (StringCompressible element2 in goldenSet)
                 {
                     if (tester.ContainsMatch(element1, element2, goldenSet) && i != j)
                     {
-                        Console.Write("{0}, ", goldenSet[j].ItemID());
+                        Console.Write("{0}, ", goldenSet[j].ItemID);
                     }
                     j++;
                 }

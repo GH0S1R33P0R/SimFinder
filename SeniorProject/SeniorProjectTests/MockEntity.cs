@@ -31,7 +31,7 @@ namespace SeniorProjectTests
             set { this.complexity = value;}
         }
 
-        string ICompressible.ItemID
+        public string ItemID
         {
             get { return this.itemID; }
             set { this.itemID = value; }

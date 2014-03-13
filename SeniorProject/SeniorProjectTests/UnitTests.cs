@@ -205,7 +205,7 @@ namespace SeniorProjectTests
             {
                ICompressible[] results = simTest.FindSimilarEntities(ticket, DataSet.ToArray());
                Console.WriteLine("Matches for itemID {0}", expectedLists[currentList][0]);
-               foreach (ICompressible expectedMatch in results)
+               foreach (StringCompressible expectedMatch in results)
                {
                    Console.Write("{0}, ", expectedMatch.ItemID);
                    Assert.IsTrue(expectedLists[currentList].Contains(expectedMatch.ItemID));

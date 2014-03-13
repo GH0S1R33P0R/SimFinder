@@ -14,9 +14,5 @@ namespace SeniorProject
         /// </summary>
         int Complexity { get; set; }
 
-        /// <summary>
-        /// Stored itemID value.
-        /// </summary>
-        string ItemID { get; set; }
     }
 }

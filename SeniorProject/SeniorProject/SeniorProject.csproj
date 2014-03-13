@@ -50,6 +50,7 @@
     <Compile Include="ICompressible.cs" />
     <Compile Include="ISimilarity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TicketCompressible.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

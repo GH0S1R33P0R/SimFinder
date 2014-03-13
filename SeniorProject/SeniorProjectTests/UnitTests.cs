@@ -81,5 +81,14 @@ namespace SeniorProjectTests
 
             Assert.IsTrue(simTest.GetComplexity(xy) + simTest.GetComplexity(z) <= simTest.GetComplexity(xz) + simTest.GetComplexity(yz));
         }
+
+        /// <summary>
+        /// Test if algorithm identifies known matches
+        /// </summary>
+        [TestMethod]
+        public void TestDetection()
+        {
+
+        }
     }
 }

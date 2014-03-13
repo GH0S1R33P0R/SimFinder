@@ -94,18 +94,16 @@ namespace SeniorProjectTests
             //Create the data set as a list of StringCompressible objects
             List<StringCompressible> DataSet = new List<StringCompressible>();
 
-            //Create the golden data set
-            DataSet.Add(new StringCompressible("IR-0026018", "Unable to start email connector after MR2 install"));
-            DataSet.Add(new StringCompressible("IR-0026036", "When using SQL Scripts to Drop Incident Tables to wipe out test tickets - ON CG restart cg_IncidentRequest is not being recreated"));
-            DataSet.Add(new StringCompressible("IR-0026137", "ChangeGear not starting"));
-            DataSet.Add(new StringCompressible("IR-0026720", "When using SQL Scripts to Drop Incident Tables to wipe out test tickets - ON CG restart cg_IncidentRequest is not being recreated"));
-            DataSet.Add(new StringCompressible("IR-0027472", "Email connector is not starting in dev envrionment"));
-            DataSet.Add(new StringCompressible("IR-0027625", "Email connector service stopped  not restarting"));
-            DataSet.Add(new StringCompressible("IR-0027693", "Email connector service not starting"));
-            DataSet.Add(new StringCompressible("IR-0027791", "Error when trying to save - Actual Start Date and End Date being used?"));
-            DataSet.Add(new StringCompressible("IR-0028919", "We recently started using the SLA manager and now newly created after action rules are not being applied"));
-            DataSet.Add(new StringCompressible("IR-0029185", "email connector service will not start after server reboot"));
-            DataSet.Add(new StringCompressible("IR-0029334", "mail Connector Service does not start and has crashed the CGWeb Client"));
+            string currentDirectory = Directory.GetCurrentDirectory();
+            var CSVReader = new StreamReader(File.OpenRead(Path.Combine(currentDirectory, "IncidentRequest_Gold.csv")));
+
+            //Read in the "golden set" and add the entities to DataSet
+            while (!CSVReader.EndOfStream)
+            {
+                var row = CSVReader.ReadLine();
+                var data = row.Split(',');
+                DataSet.Add(new StringCompressible(data[0], data[1]));
+            }
 
             //Create the expected outcome 2D list
             List<List<string>> expectedLists = new List<List<string>>();

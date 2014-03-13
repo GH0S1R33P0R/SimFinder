@@ -200,16 +200,20 @@ namespace SeniorProjectTests
             //Similarity object to use for FindSimilarEntities
             Similarity simTest = new Similarity();
 
+            int currentList = 0;
+
             //Get the ordered results and return if the match is present
             foreach(StringCompressible ticket in DataSet)
             {
-               int i = 0;
                ICompressible[] results = simTest.FindSimilarEntities(ticket, DataSet.ToArray());
+               Console.WriteLine("Matches for itemID {0}", expectedLists[currentList][0]);
                foreach (ICompressible expectedMatch in results)
                {
-                   Console.Write(expectedLists[i].Contains(expectedMatch.ItemID));
+                   Console.Write("{0}, ", expectedMatch.ItemID);
+                   Assert.IsTrue(expectedLists[currentList].Contains(expectedMatch.ItemID));
                }
-               i++;
+               currentList++;
+               Console.WriteLine('\n');
             }
 
         }

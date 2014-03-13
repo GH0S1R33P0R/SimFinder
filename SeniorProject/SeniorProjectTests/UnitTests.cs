@@ -211,7 +211,8 @@ namespace SeniorProjectTests
                logFile.Write("{0} Matches: ", expectedLists[currentList][0]);
                foreach (StringCompressible expectedMatch in results)
                {
-                   logFile.Write("{0}, ", expectedMatch.ItemID);
+                   logFile.Write("{0} ", expectedMatch.ItemID);
+                   logFile.Write("({0}), ", expectedLists[currentList].Contains(expectedMatch.ItemID));
                    Assert.IsTrue(expectedLists[currentList].Contains(expectedMatch.ItemID));
                }
                currentList++;

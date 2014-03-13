@@ -10,6 +10,7 @@ namespace SeniorProject
     {
         private int complexity;
         private byte[] data;
+        private string itemID;
 
         //Default Constructor
         public StringCompressible()
@@ -18,10 +19,17 @@ namespace SeniorProject
             data = new byte[0];
         }
        
-        //Constructor that takes string data
-        public StringCompressible(string data)
+        //Constructor that takes one string
+        public StringCompressible(string summary)
         {
-            this.data = Encoding.ASCII.GetBytes(data);
+            data = Encoding.ASCII.GetBytes(summary);
+        }
+
+        //Constructor that takes two strings
+        public StringCompressible(string ID, string summary)
+        {
+            data = Encoding.ASCII.GetBytes(summary);
+            itemID = ID;
         }
 
         byte[] ICompressible.ToByteArray()

@@ -31,6 +31,11 @@ namespace SeniorProject
             return data;
         }
 
+        public string ToString()
+        {
+            return Encoding.ASCII.GetString(data);
+        }
+
         int ICompressible.Complexity
         {
             get { return this.complexity; }

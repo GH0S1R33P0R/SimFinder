@@ -12,7 +12,6 @@ namespace SeniorProjectAnalytics
     {
         private static ISimilarity isSim;
         private static TicketCompressible[] inputs;
-        private static ICompressible[] output;
 
         /// <summary>
         /// Read file "input.txt" and set list of TicketCompressible items.
@@ -29,7 +28,6 @@ namespace SeniorProjectAnalytics
                 string[] itemsInLine;
                 string id;
                 string summary;
-
 
                 // Skip the header line
                 r.ReadLine();
@@ -78,12 +76,40 @@ namespace SeniorProjectAnalytics
             isSim = new Similarity();
             isSim.Threshold = 0.5;
 
+            bool toConsole = true; // If we want to see the output live.
+
             inputs = new TicketCompressible[0];
             analytics.ObtainTickets(ref inputs);
 
             // Now each element in inputs has itemID, summary, and complexity.
+            foreach (TicketCompressible ticket in inputs)
+            {
+                ticket.SimilarIDList = analytics.FindSimilars(ticket, inputs);
 
-            // TODO: FindSimilars for each ticket and write to file
+                if (toConsole)
+                {
+                    bool first = true;
+                    Console.Write("\n{0}: ", ticket.ItemID);
+                    foreach (TicketCompressible match in ticket.SimilarIDList)
+                    {
+                        // A hack to get the commas to appear correctly
+                        if (!first)
+                        {
+                            Console.Write(" ,{0}", match.ItemID);
+                        }
+                        else
+                        {
+                            Console.Write(" {0}", match.ItemID);
+                            first = false;
+                        }
+                    }
+                }
+            }
+
+            if (toConsole)
+            {
+                Console.ReadLine();
+            }
         }
     }
 }

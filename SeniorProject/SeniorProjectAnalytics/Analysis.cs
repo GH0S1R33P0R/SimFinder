@@ -60,14 +60,23 @@ namespace SeniorProjectAnalytics
         /// <returns>An array of tickets similar to entity.</returns>
         public TicketCompressible[] FindSimilars(TicketCompressible entity, TicketCompressible[] entityList)
         {
-            // TODO: implement
-            return entityList;
+            var matches = new List<TicketCompressible>();
+
+            foreach (TicketCompressible ticket in entityList)
+            {
+                if (isSim.IsSimilar(entity,ticket))
+                {
+                    matches.Add(ticket);
+                }
+            }
+            return matches.ToArray();
         }
 
         static void Main(string[] args )
         {
             Analysis analytics = new Analysis();
             isSim = new Similarity();
+            isSim.Threshold = 0.5;
 
             inputs = new TicketCompressible[0];
             analytics.ObtainTickets(ref inputs);

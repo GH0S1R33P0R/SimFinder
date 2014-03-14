@@ -12,7 +12,7 @@ namespace SeniorProject
         private byte[] data;
 
         private string itemID; // This tickets ItemID value.
-        private string[] similarIDList; // All tickets similar to this.
+        private TicketCompressible[] similarIDList; // All tickets similar to this.
 
         /// <summary>
         /// TicketCompressible constructor
@@ -23,7 +23,6 @@ namespace SeniorProject
         {
             data = Encoding.ASCII.GetBytes(summary);
             itemID = ID;
-            similarIDList = new string[0];
         }
 
         byte[] ICompressible.ToByteArray()
@@ -47,7 +46,7 @@ namespace SeniorProject
             get { return this.itemID; }
         }
 
-        public string[] SimilarIDList
+        public TicketCompressible[] SimilarIDList
         {
             get { return this.similarIDList; }
             set { this.similarIDList = value; }

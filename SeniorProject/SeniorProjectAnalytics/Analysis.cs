@@ -62,7 +62,7 @@ namespace SeniorProjectAnalytics
 
             foreach (TicketCompressible ticket in entityList)
             {
-                if (isSim.IsSimilar(entity,ticket))
+                if (isSim.IsSimilar(entity, ticket))
                 {
                     matches.Add(ticket);
                 }
@@ -70,7 +70,7 @@ namespace SeniorProjectAnalytics
             return matches.ToArray();
         }
 
-        static void Main(string[] args )
+        static void Main(string[] args)
         {
             Analysis analytics = new Analysis();
             isSim = new Similarity();
@@ -81,25 +81,38 @@ namespace SeniorProjectAnalytics
             inputs = new TicketCompressible[0];
             analytics.ObtainTickets(ref inputs);
 
-            // Now each element in inputs has itemID, summary, and complexity.
-            foreach (TicketCompressible ticket in inputs)
-            {
-                ticket.SimilarIDList = analytics.FindSimilars(ticket, inputs);
 
-                if (toConsole)
+            // Now each element in inputs has itemID, summary, and complexity.
+
+            using (var w = new StreamWriter("output.txt"))
+            {
+                foreach (TicketCompressible ticket in inputs)
                 {
+                    ticket.SimilarIDList = analytics.FindSimilars(ticket, inputs);
+
+                    w.Write("\n{0}: ", ticket.ItemID);
+                    if (toConsole)
+                    {
+                        Console.Write("\n{0}: ", ticket.ItemID);
+                    }
+
+                    // Display all the matches to this ticket
                     bool first = true;
-                    Console.Write("\n{0}: ", ticket.ItemID);
                     foreach (TicketCompressible match in ticket.SimilarIDList)
                     {
                         // A hack to get the commas to appear correctly
                         if (!first)
                         {
-                            Console.Write(" ,{0}", match.ItemID);
+                            if (toConsole)
+                            {
+                                Console.Write(", {0}", match.ItemID);
+                            }
+                            w.Write(", {0}", match.ItemID);
                         }
                         else
                         {
                             Console.Write(" {0}", match.ItemID);
+                            w.Write(" {0}", match.ItemID);
                             first = false;
                         }
                     }

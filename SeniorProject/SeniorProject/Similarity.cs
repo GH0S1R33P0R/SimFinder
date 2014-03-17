@@ -22,7 +22,7 @@ namespace SeniorProject
             using (MemoryStream compressionStream = new MemoryStream())
             {
                 // Result goes in compressionStream
-                using (GZipStream gZipper = new GZipStream(compressionStream, CompressionMode.Compress,true ))
+                using (DeflateStream gZipper = new DeflateStream(compressionStream, CompressionLevel.Fastest, true))
                 {
                     // Compress the compressed data.
                     gZipper.Write(uncompressedData, 0, uncompressedData.Length);
@@ -34,12 +34,12 @@ namespace SeniorProject
             return compressedSize;
         }
 
-        private double getNCD(byte[] entity1, byte[] entity2)
+        private double getNCD(ICompressible entity1, ICompressible entity2)
         {
-            int compressedEntity1 = compressionSize(entity1);
-            int compressedEntity2 = compressionSize(entity2);
-            
-            byte[] combinedArray = entity1.Concat(entity2).ToArray();
+            int compressedEntity1 = GetComplexity(entity1);
+            int compressedEntity2 = GetComplexity(entity2);
+
+            byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();
 
             double NCD_A = (double) compressionSize(combinedArray);
             double NCD_B, NCD_C;
@@ -58,7 +58,7 @@ namespace SeniorProject
             return NCD_result;
         }
 
-        // MCD(A,B) = max( |c(AB)-c(AA)|, |c(AB)-c(BB)|)/max(c(AA),c(BB))
+        // MCD(A,B) = max(|c(AB)-c(AA)|, |c(AB)-c(BB)|)/max(c(AA),c(BB))
         private double getMCD(byte[] entity1, byte[] entity2)
         {
             double MCD_numerator;
@@ -136,9 +136,7 @@ namespace SeniorProject
 
         public double GetSimilarity(ICompressible entity1, ICompressible entity2)
         {
-            double ncdResult;
-            ncdResult = getNCD(entity1.ToByteArray(), entity2.ToByteArray());
-            return ncdResult;
+            return getNCD(entity1, entity2);;
         }
 
         public ICompressible[] FindSimilarEntities(ICompressible entity, ICompressible[] dataSet)

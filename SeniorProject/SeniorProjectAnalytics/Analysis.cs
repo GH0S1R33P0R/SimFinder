@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeniorProject;
 using System.IO;
+using System.Diagnostics;
 
 namespace SeniorProjectAnalytics
 {
@@ -74,7 +75,9 @@ namespace SeniorProjectAnalytics
         {
             Analysis analytics = new Analysis();
             isSim = new Similarity();
-            isSim.Threshold = 0.5;
+            isSim.Threshold = 0.25;
+
+            var topN = 500;
 
             bool toConsole = true; // If we want to see the output live.
 
@@ -86,37 +89,43 @@ namespace SeniorProjectAnalytics
 
             using (var w = new StreamWriter("output.txt"))
             {
-                foreach (TicketCompressible ticket in inputs)
+                var sw = new Stopwatch();
+                sw.Start();
+                foreach (TicketCompressible ticket in inputs.Take(topN))
                 {
                     ticket.SimilarIDList = analytics.FindSimilars(ticket, inputs);
 
-                    w.Write("\n{0}: ", ticket.ItemID);
-                    if (toConsole)
-                    {
-                        Console.Write("\n{0}: ", ticket.ItemID);
-                    }
-
                     // Display all the matches to this ticket
-                    bool first = true;
+                    var dupItemIDs = new List<string>();
                     foreach (TicketCompressible match in ticket.SimilarIDList)
                     {
-                        // A hack to get the commas to appear correctly
-                        if (!first)
+                        if (match.ItemID != ticket.ItemID)
                         {
-                            if (toConsole)
-                            {
-                                Console.Write(", {0}", match.ItemID);
-                            }
-                            w.Write(", {0}", match.ItemID);
-                        }
-                        else
-                        {
-                            Console.Write(" {0}", match.ItemID);
-                            w.Write(" {0}", match.ItemID);
-                            first = false;
+                            dupItemIDs.Add(match.ItemID);
                         }
                     }
+
+                    if (dupItemIDs.Count > 0 && dupItemIDs.Count <= 3)
+                    {
+                        var matches = string.Format("{0}: {1}", ticket.ItemID, string.Join(", ", dupItemIDs));
+                        if (toConsole)
+                        {
+                            Console.WriteLine(matches);
+                        }
+                        w.WriteLine(matches);
+                    }
                 }
+
+                sw.Stop();
+                var avgTimePer = String.Format("Average Time (ms): {0}", (double) sw.Elapsed.TotalMilliseconds / topN);
+                if (toConsole)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(avgTimePer);
+                }
+                w.WriteLine();
+                w.WriteLine(avgTimePer);
+
             }
 
             if (toConsole)

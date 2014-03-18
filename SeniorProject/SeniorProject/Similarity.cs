@@ -12,6 +12,12 @@ namespace SeniorProject
     public class Similarity : ISimilarity
     {
         private double threshold;
+        
+        //Default constructor
+        public Similarity()
+        {
+            threshold = 0.5;
+        }
 
         private int compressionSize(byte[] input)
         {
@@ -157,6 +163,25 @@ namespace SeniorProject
             similarEntities.Sort((a, b) => a.Item1.CompareTo(b.Item1));
 
             return similarEntities.Select(t => t.Item2).ToArray();
+        }
+
+        public List<Tuple<double, StringCompressible>> FindSimilarEntities(StringCompressible entity, StringCompressible[] dataSet)
+        {
+            List<Tuple<double, StringCompressible>> similarEntities = new List<Tuple<double, StringCompressible>>();
+            double similarityVal;
+
+            foreach (StringCompressible entity2 in dataSet)
+            {
+                similarityVal = GetSimilarity(entity, entity2);
+                if (similarityVal < threshold)
+                {
+                    similarEntities.Add(new Tuple<double, StringCompressible>(similarityVal, entity2));
+                }
+            }
+
+            similarEntities.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+
+            return similarEntities;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
+using Lz4Net;
 
 namespace SeniorProject
 {
@@ -44,6 +45,14 @@ namespace SeniorProject
                 }
             }
             return compressedSize;
+        }
+
+        private int compressionSizeLZ4(byte[] input)
+        {
+            byte[] buffer = input;
+            byte[] compressed = Lz4Net.Lz4.CompressBytes(buffer, 0, buffer.Length, Lz4Net.Lz4Mode.Fast);
+
+            return compressed.Length;
         }
 
 

@@ -71,67 +71,67 @@ namespace SeniorProjectAnalytics
             return matches.ToArray();
         }
 
-        static void Main(string[] args)
-        {
-            Analysis analytics = new Analysis();
-            isSim = new Similarity();
-            isSim.Threshold = 0.25;
+        //static void Main(string[] args)
+        //{
+        //    Analysis analytics = new Analysis();
+        //    isSim = new Similarity();
+        //    isSim.Threshold = 0.25;
 
-            var topN = 500;
+        //    var topN = 500;
 
-            bool toConsole = true; // If we want to see the output live.
+        //    bool toConsole = true; // If we want to see the output live.
 
-            inputs = new TicketCompressible[0];
-            analytics.ObtainTickets(ref inputs);
+        //    inputs = new TicketCompressible[0];
+        //    analytics.ObtainTickets(ref inputs);
 
 
-            // Now each element in inputs has itemID, summary, and complexity.
+        //    // Now each element in inputs has itemID, summary, and complexity.
 
-            using (var w = new StreamWriter("output.txt"))
-            {
-                var sw = new Stopwatch();
-                sw.Start();
-                foreach (TicketCompressible ticket in inputs.Take(topN))
-                {
-                    ticket.SimilarIDList = analytics.FindSimilars(ticket, inputs);
+        //    using (var w = new StreamWriter("output.txt"))
+        //    {
+        //        var sw = new Stopwatch();
+        //        sw.Start();
+        //        foreach (TicketCompressible ticket in inputs.Take(topN))
+        //        {
+        //            ticket.SimilarIDList = analytics.FindSimilars(ticket, inputs);
 
-                    // Display all the matches to this ticket
-                    var dupItemIDs = new List<string>();
-                    foreach (TicketCompressible match in ticket.SimilarIDList)
-                    {
-                        if (match.ItemID != ticket.ItemID)
-                        {
-                            dupItemIDs.Add(match.ItemID);
-                        }
-                    }
+        //            // Display all the matches to this ticket
+        //            var dupItemIDs = new List<string>();
+        //            foreach (TicketCompressible match in ticket.SimilarIDList)
+        //            {
+        //                if (match.ItemID != ticket.ItemID)
+        //                {
+        //                    dupItemIDs.Add(match.ItemID);
+        //                }
+        //            }
 
-                    if (dupItemIDs.Count > 0 && dupItemIDs.Count <= 3)
-                    {
-                        var matches = string.Format("{0}: {1}", ticket.ItemID, string.Join(", ", dupItemIDs));
-                        if (toConsole)
-                        {
-                            Console.WriteLine(matches);
-                        }
-                        w.WriteLine(matches);
-                    }
-                }
+        //            if (dupItemIDs.Count > 0 && dupItemIDs.Count <= 3)
+        //            {
+        //                var matches = string.Format("{0}: {1}", ticket.ItemID, string.Join(", ", dupItemIDs));
+        //                if (toConsole)
+        //                {
+        //                    Console.WriteLine(matches);
+        //                }
+        //                w.WriteLine(matches);
+        //            }
+        //        }
 
-                sw.Stop();
-                var avgTimePer = String.Format("Average Time (ms): {0}", (double) sw.Elapsed.TotalMilliseconds / topN);
-                if (toConsole)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(avgTimePer);
-                }
-                w.WriteLine();
-                w.WriteLine(avgTimePer);
+        //        sw.Stop();
+        //        var avgTimePer = String.Format("Average Time (ms): {0}", (double) sw.Elapsed.TotalMilliseconds / topN);
+        //        if (toConsole)
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine(avgTimePer);
+        //        }
+        //        w.WriteLine();
+        //        w.WriteLine(avgTimePer);
 
-            }
+        //    }
 
-            if (toConsole)
-            {
-                Console.ReadLine();
-            }
-        }
+        //    if (toConsole)
+        //    {
+        //        Console.ReadLine();
+        //    }
+        //}
     }
 }

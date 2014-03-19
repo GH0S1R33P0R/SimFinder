@@ -55,6 +55,7 @@ namespace SeniorProjectAnalytics
 
             //Similarity object to use for the FindSimilarEntities function
             Similarity simObject = new Similarity();
+            simObject.Threshold = 0.45;
 
             //The ID of the ticket that you want to find similar tickets for
             string searchID;
@@ -80,8 +81,7 @@ namespace SeniorProjectAnalytics
             while (true)
             {
                 //Get the item ID to search for and store it in searchID
-                Console.WriteLine("Enter 'q' to exit.");
-                Console.WriteLine("Enter the itemID of the ticket you would like to find similarities for: ");
+                Console.WriteLine("Enter the itemID of the search ticket ('q' to quit): ");
                 searchID = Console.ReadLine();
 
                 //REPL control
@@ -105,10 +105,10 @@ namespace SeniorProjectAnalytics
 
                 foreach (Tuple<double, StringCompressible> ticket in results)
                 {
-                    if (counter > 20)
-                    {
-                        break;
-                    }
+                    //if (counter > 20)
+                    //{
+                    //    break;
+                    //}
                     Console.WriteLine("{0}.\tTicket ID: {1}\tConfidence Rating: {2}", counter, ticket.Item2.ItemID, ticket.Item1);
                     counter++;
                 }

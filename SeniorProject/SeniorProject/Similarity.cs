@@ -19,7 +19,13 @@ namespace SeniorProject
             threshold = 0.5;
         }
 
+
         private int compressionSize(byte[] input)
+        {
+            return compressionSizeGzip(input);
+        }
+
+        private int compressionSizeGzip(byte[] input)
         {
             int compressedSize = 0;
             byte[] uncompressedData = input;
@@ -39,6 +45,7 @@ namespace SeniorProject
             }
             return compressedSize;
         }
+
 
         private double getNCD(ICompressible entity1, ICompressible entity2)
         {

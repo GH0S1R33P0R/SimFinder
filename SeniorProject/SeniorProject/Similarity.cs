@@ -165,7 +165,7 @@ namespace SeniorProject
             return similarEntities.Select(t => t.Item2).ToArray();
         }
 
-        public List<Tuple<double, StringCompressible>> FindSimilarEntities(StringCompressible entity, StringCompressible[] dataSet)
+        public List<Tuple<double, StringCompressible>> FindSimilarValAndEntities(StringCompressible entity, StringCompressible[] dataSet)
         {
             List<Tuple<double, StringCompressible>> similarEntities = new List<Tuple<double, StringCompressible>>();
             double similarityVal;

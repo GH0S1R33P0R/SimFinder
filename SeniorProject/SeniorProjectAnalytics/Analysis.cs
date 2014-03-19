@@ -71,7 +71,7 @@ namespace SeniorProjectAnalytics
             return matches.ToArray();
         }
 
-        static void Analysis( )
+        public static void RunAnalysis( )
         {
             Analysis analytics = new Analysis();
             isSim = new Similarity();

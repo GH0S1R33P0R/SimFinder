@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
+using Lz4Net;
 
 namespace SeniorProject
 {
@@ -19,7 +20,13 @@ namespace SeniorProject
             threshold = 0.5;
         }
 
+
         private int compressionSize(byte[] input)
+        {
+            return compressionSizeGzip(input);
+        }
+
+        private int compressionSizeGzip(byte[] input)
         {
             int compressedSize = 0;
             byte[] uncompressedData = input;
@@ -39,6 +46,15 @@ namespace SeniorProject
             }
             return compressedSize;
         }
+
+        private int compressionSizeLZ4(byte[] input)
+        {
+            byte[] buffer = input;
+            byte[] compressed = Lz4Net.Lz4.CompressBytes(buffer, 0, buffer.Length, Lz4Net.Lz4Mode.Fast);
+
+            return compressed.Length;
+        }
+
 
         private double getNCD(ICompressible entity1, ICompressible entity2)
         {

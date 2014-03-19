@@ -101,7 +101,7 @@ namespace SeniorProject
             return MCD_result;
         }
 
-        double ISimilarity.Threshold
+        public double Threshold
         {
             get { return this.threshold; }
             set { this.threshold = value; }

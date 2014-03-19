@@ -40,14 +40,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lz4Net">
+    <Reference Include="Lz4Net, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lz4.Net.1.0.98\lib\net45\Lz4Net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Noemax.Compression.Net4.Trial">
-      <HintPath>..\packages\Noemax.Compression.2.28.1958\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>

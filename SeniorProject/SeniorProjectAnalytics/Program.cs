@@ -103,6 +103,10 @@ namespace SeniorProjectAnalytics
 
                 int counter = 1;
 
+                Console.WriteLine();
+                Console.WriteLine("-----Similar Ticket List-----");
+                Console.WriteLine();
+
                 foreach (Tuple<double, StringCompressible> ticket in results)
                 {
                     //if (counter > 20)

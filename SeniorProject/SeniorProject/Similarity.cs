@@ -130,11 +130,10 @@ namespace SeniorProject
             {
                 return entity.Complexity;
             }
-            int compressedSize; // Used to hold the result
 
-            compressedSize = compressionSize(entity.ToByteArray());
+            entity.Complexity = compressionSize(entity.ToByteArray());
 
-            return compressedSize;
+            return entity.Complexity;
         }
 
         public bool IsSimilar(ICompressible entity1, ICompressible entity2)

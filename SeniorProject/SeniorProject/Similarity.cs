@@ -81,17 +81,17 @@ namespace SeniorProject
         }
 
         // MCD(A,B) = max(|c(AB)-c(AA)|, |c(AB)-c(BB)|)/max(c(AA),c(BB))
-        private double getMCD(byte[] entity1, byte[] entity2)
+        private double getMCD(ICompressible entity1, ICompressible entity2)
         {
             double MCD_numerator;
             double MCD_result;
             
             // Find c(AA) and c(BB)
-            double MCD_AA = (double)compressionSize(entity1.Concat(entity1).ToArray());
-            double MCD_BB = (double)compressionSize(entity2.Concat(entity2).ToArray());
+            double MCD_AA = (double) compressionSize(entity1.ToByteArray().Concat(entity1.ToByteArray()).ToArray());
+            double MCD_BB = (double) compressionSize(entity2.ToByteArray().Concat(entity2.ToByteArray()).ToArray());
 
             // Find c(AB)
-            byte[] combinedArray = entity1.Concat(entity2).ToArray();
+            byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();
             double MCD_AB = (double)compressionSize(combinedArray);
 
             // Find max( |c(AB)-c(AA)|, |c(AB)-c(BB)|)

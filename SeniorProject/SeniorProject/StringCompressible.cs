@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SeniorProject
 {
+    // String version of the ICompressible ticket entity
     public class StringCompressible : ICompressible
     {
         private int complexity;    // Size of the compressed ticket

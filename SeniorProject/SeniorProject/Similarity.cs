@@ -15,19 +15,29 @@ namespace SeniorProject
         // The cutoff value for returning similar/duplicate tickets
         private double threshold;
         
-        // Default constructor
+        /// <summary>
+        /// Default Similarity constructor
+        /// </summary>
         public Similarity()
         {
             threshold = 0.5;
         }
 
-        // Compresses the byte array
+        /// <summary>
+        /// Compresses the byte array
+        /// </summary>
+        /// <param name="input">Ticket as a byte array</param>
+        /// <returns>Integer representing the size/length of the compressed ticket</returns>
         private int compressionSize(byte[] input)
         {
             return compressionSizeGzip(input);
         }
 
-        // Method to determine the size/length of the compressed ticket using Gzip
+        /// <summary>
+        /// Method to determine the size/length of the compressed ticket using Gzip
+        /// </summary>
+        /// <param name="input">Ticket as a byte array</param>
+        /// <returns>Integer representing the size/length of the compressed ticket</returns>
         private int compressionSizeGzip(byte[] input)
         {
             int compressedSize = 0;             // Variable for return value
@@ -49,7 +59,11 @@ namespace SeniorProject
             return compressedSize;
         }
 
-        // Method to determine the size/length of the compressed ticket using LZ4
+        /// <summary>
+        /// Method to determine the size/length of the compressed ticket using LZ4
+        /// </summary>
+        /// <param name="input">Ticket as a byte array</param>
+        /// <returns>Integer representing the size/length of the compressed ticket</returns>
         private int compressionSizeLZ4(byte[] input)
         {
             byte[] buffer = input;
@@ -58,8 +72,13 @@ namespace SeniorProject
             return compressed.Length;
         }
 
-        // Method to determine the NCD value between two tickets (ICompressible objects)
-        // NCD(x,y) = {Z(xy) - min[Z(x), Z(y)]} / max[Z(x), Z(y)]
+        /// <summary>
+        /// Method to determine the NCD value between two tickets (ICompressible objects)
+        /// NCD(x,y) = {Z(xy) - min[Z(x), Z(y)]} / max[Z(x), Z(y)]
+        /// </summary>
+        /// <param name="entity1">ICompressible ticket to operate NCD on</param>
+        /// <param name="entity2">ICompressible ticket to operate NCD on</param>
+        /// <returns>Double value representing the NCD value between the two tickets</returns>
         private double getNCD(ICompressible entity1, ICompressible entity2)
         {
             // Compress the tickets
@@ -93,8 +112,13 @@ namespace SeniorProject
             return NCD_result;
         }
 
-        // Method to determine the MCD value between two tickets (ICompressible objects)
-        // MCD(A,B) = max(|c(AB)-c(AA)|, |c(AB)-c(BB)|)/max(c(AA),c(BB))
+        /// <summary>
+        /// Method to determine the MCD value between two tickets
+        /// MCD(A,B) = max(|c(AB)-c(AA)|, |c(AB)-c(BB)|)/max(c(AA),c(BB))
+        /// </summary>
+        /// <param name="entity1">ICompressible ticket to operate MCD on</param>
+        /// <param name="entity2">ICompressible ticket to operate MCD on</param>
+        /// <returns>Double value representing the MCD value between the two tickets</returns>
         private double getMCD(ICompressible entity1, ICompressible entity2)
         {
             double MCD_numerator;
@@ -209,8 +233,13 @@ namespace SeniorProject
             return similarEntities.Select(t => t.Item2).ToArray();
         }
 
-        // Similar to FindSimilarEntites but returns a List of StringCompressibles
-        // rather than an array of ICompressibles and includes the NCD/MCD value in the return list
+        /// <summary>
+        /// Similar to FindSimilarEntites but returns a List of StringCompressibles
+        /// rather than an array of ICompressibles and includes the NCD/MCD value in the return list
+        /// </summary>
+        /// <param name="entity">StringCompressible ticket to find similarities for</param>
+        /// <param name="dataSet">Array of StringCompressible objects representing the ticket database</param>
+        /// <returns>Returns an orderd list of similar entities.</returns>
         public List<Tuple<double, StringCompressible>> FindSimilarValAndEntities(StringCompressible entity, StringCompressible[] dataSet)
         {
             List<Tuple<double, StringCompressible>> similarEntities = new List<Tuple<double, StringCompressible>>();

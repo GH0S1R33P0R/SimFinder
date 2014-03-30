@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace SeniorProjectAnalytics
 {
+    // Driver program for the NCD/MCD library
     class Program
     {
         static void Main(string[] args)
@@ -53,6 +54,7 @@ namespace SeniorProjectAnalytics
                 //Start the timer before searching
                 timer = Stopwatch.StartNew();
 
+                // Find the itemID matching the requested ticket and populate the results List with similar tickets
                 foreach (StringCompressible ticket in DataSet)
                 {
                     if (ticket.ItemID.Equals(searchID))
@@ -61,12 +63,14 @@ namespace SeniorProjectAnalytics
                     }
                 }
 
-                int counter = 1;
+                int counter = 1;   // Counter for the number of tickets to return
 
+                // Print output formatting
                 Console.WriteLine();
                 Console.WriteLine("-----Similar Ticket List-----");
                 Console.WriteLine();
 
+                // Print the similar tickets with their ID and NCD/MCD value
                 foreach (Tuple<double, StringCompressible> ticket in results)
                 {
                     //if (counter > 20)
@@ -77,7 +81,9 @@ namespace SeniorProjectAnalytics
                     counter++;
                 }
 
-                timer.Stop();
+                timer.Stop();  // Stop the timer
+
+                // Output the time it took to return the results
                 Console.WriteLine();
                 Console.WriteLine("Searched 5,000 tickets and produced results in {0} ms", timer.ElapsedMilliseconds);
                 Console.WriteLine();

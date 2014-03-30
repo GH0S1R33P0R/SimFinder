@@ -209,8 +209,8 @@ namespace SeniorProject
             return similarEntities.Select(t => t.Item2).ToArray();
         }
 
-        // Overloaded version of FindSimilarEntites that returns a List of StringCompressibles
-        // rather than an array of ICompressibles
+        // Similar to FindSimilarEntites but returns a List of StringCompressibles
+        // rather than an array of ICompressibles and includes the NCD/MCD value in the return list
         public List<Tuple<double, StringCompressible>> FindSimilarValAndEntities(StringCompressible entity, StringCompressible[] dataSet)
         {
             List<Tuple<double, StringCompressible>> similarEntities = new List<Tuple<double, StringCompressible>>();

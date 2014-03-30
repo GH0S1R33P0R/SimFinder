@@ -9,13 +9,13 @@ namespace SeniorProjectTests
 {
     public class AcceptanceTests
     {
-        //This method tests if an expected match is found for a given ticket and data set
+        // This method tests if an expected match is found for a given ticket and data set
         public bool ContainsMatch(ICompressible testTicket, ICompressible expectedMatch, ICompressible[] dataSet)
         {
-            //Similarity object to use for FindSimilarEntities
+            // Similarity object to use for FindSimilarEntities
             Similarity simTest = new Similarity(); 
 
-            //Get the ordered results and return if the match is present
+            // Get the ordered results and return if the match is present
             ICompressible[] results = simTest.FindSimilarEntities(testTicket, dataSet);
 
             if(results.Contains(expectedMatch))
@@ -28,12 +28,12 @@ namespace SeniorProjectTests
             }
         }
 
-        //Main function to run the acceptance tests
+        // Main function to run the acceptance tests
         static void Main(string[] args)
         {
             AcceptanceTests tester = new AcceptanceTests();
 
-            //Create the golden set as an array of StringCompressible objects
+            // Create the golden set as an array of StringCompressible objects
             StringCompressible[] goldenSet = new StringCompressible[11] {
             new StringCompressible("IR-0026018", "Unable to start email connector after MR2 install"),
             new StringCompressible("IR-0026036", "When using SQL Scripts to Drop Incident Tables to wipe out test tickets - ON CG restart cg_IncidentRequest is not being recreated"),
@@ -48,10 +48,11 @@ namespace SeniorProjectTests
             new StringCompressible("IR-0029334", "mail Connector Service does not start and has crashed the CGWeb Client")
             };
 
-            //Check each of the 11 tickets against each other and print true if ncd value < threshhold, false otherwise
+            // Counters
             int i = 0;
             int j = 0;
 
+            // Check each of the 11 tickets against each other and print true if ncd value < threshhold, false otherwise
             foreach (StringCompressible element1 in goldenSet)
             {
                 Console.Write("{0} matches: ", goldenSet[i].ItemID);
@@ -68,7 +69,7 @@ namespace SeniorProjectTests
                 i++;
             }
            
-            Console.Read(); //Prevents the console from closing
+            Console.Read(); // Prevents the console from closing
         }
     }
 }

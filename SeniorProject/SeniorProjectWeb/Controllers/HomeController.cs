@@ -1,9 +1,12 @@
 ﻿using SeniorProject;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SeniorProjectWeb.Models;
+using Newtonsoft.Json;
 
 namespace SeniorProjectWeb.Controllers
 {
@@ -14,23 +17,38 @@ namespace SeniorProjectWeb.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public string GetSimilarTickets(string summary)
         {
-            ViewBag.Message = "Your application description page.";
+            StringCompressible ticket = new StringCompressible(summary);
 
-            return View();
-        }
+            Similarity simObject = new Similarity();
+            simObject.Threshold = 0.45;
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            List<StringCompressible> DataSet = new List<StringCompressible>();
 
-            return View();
-        }
+            //Open the CSV to read in the data set
+            var CSVReader = new StreamReader(System.IO.File.OpenRead(Path.Combine(Server.MapPath("~/App_Data"), "IncidentRequest_Gold5k.csv")));
 
-        public JsonResult GetSimilarTickets(String summary){
-            List<Tuple<int, double>> similarTickets = new List<Tuple<int, double>>();
-            return Json(similarTickets);
+            //Read in the "golden set" and add the entities to DataSet
+            while (!CSVReader.EndOfStream)
+            {
+                var row = CSVReader.ReadLine();
+                DataSet.Add(new StringCompressible(row.Substring(0, row.IndexOf(',')), row.Substring(row.IndexOf(',') + 1)));
+                //Console.WriteLine("itemID: {0}, summary: {1}", row.Substring(0, row.IndexOf(',')), row.Substring(row.IndexOf(',')+1));
+            }
+
+            List<Ticket> similarTickets = new List<Ticket>();
+            List<Tuple<double, StringCompressible>> result = new List<Tuple<double, StringCompressible>>();
+
+            result = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
+
+            foreach (Tuple<double, StringCompressible> element in result)
+            {
+                similarTickets.Add(new Ticket {id = element.Item2.ItemID, rating = element.Item1 });
+            }
+            
+            return JsonConvert.SerializeObject(similarTickets);
 
         }
     }

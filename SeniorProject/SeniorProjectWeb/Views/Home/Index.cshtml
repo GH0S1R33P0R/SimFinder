@@ -2,20 +2,37 @@
     ViewBag.Title = "Home Page";
 }
 <script type="text/javascript">
-    function getSimilarTicket() {
+
+    function getSimilarTicket(value) {
 
         $.ajax({
             type: 'GET',
-            url: '@Url.Action("GetSimilarTickets", "Home")',
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data:  JSON.stringify({ summary: 'Change Gear' }),
+            url: '@Url.Action("GetSimilarTicketsSummary", "Home")',
+            data: { summary: value },
             success: successFunc,
             error: errorFunc
         });
 
         function successFunc(data) {
-            alert(data[0].id);
+            alert(data);
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    };
+    function getSimilarTicketID(value) {
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetSimilarTicketsID", "Home")',
+            data: { searchID: value },
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc(data) {
+            alert(data);
         }
 
         function errorFunc() {
@@ -23,5 +40,376 @@
         }
     };
 </script>
-
-<button onclick="getSimilarTicket()">Click Me</button>
+<body>
+    <div>
+        <input type="text" id="text_summary" name="summary" size="250" placeholder="Summary">
+        <button onclick="getSimilarTicket(document.getElementById('text_summary').value)">Submit</button>
+    </div>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th title="Field #1">OID</th>
+                    <th title="Field #2">Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="right">1</td>
+                    <td>Calendar picker doesn&#39;t work on web</td>
+                    <td><button onclick="getSimilarTicketID('1')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">2</td>
+                    <td>3.0 - Items Previously Discovered and Unmanaged are rediscovered and put in Newly Disc.</td>
+                    <td><button onclick="getSimilarTicketID('2')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">3</td>
+                    <td>3.0 - Error Adding impacted resources to RFCs</td>
+                    <td><button onclick="getSimilarTicketID('3')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">4</td>
+                    <td>Alert is no longer updating RISK correctly</td>
+                    <td><button onclick="getSimilarTicketID('4')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">5</td>
+                    <td>Change Type on Web not sorting in 2nd and 3rd Dropdown</td>
+                    <td><button onclick="getSimilarTicketID('5')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">6</td>
+                    <td>Client takes 2 min to start up on first startup after reboot</td>
+                    <td><button onclick="getSimilarTicketID('6')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">7</td>
+                    <td>Comments are Disappearing</td>
+                    <td><button onclick="getSimilarTicketID('7')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">8</td>
+                    <td>Domain name incorrect on windows2000 scans</td>
+                    <td><button onclick="getSimilarTicketID('8')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">9</td>
+                    <td>Error Approving RFC</td>
+                    <td><button onclick="getSimilarTicketID('9')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">10</td>
+                    <td>Error scanning Dell Print Servers</td>
+                    <td><button onclick="getSimilarTicketID('10')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">11</td>
+                    <td>Export View Contents doesn&#39;t seem to work from CMDB tab</td>
+                    <td><button onclick="getSimilarTicketID('11')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">12</td>
+                    <td>how do you sort by Master number</td>
+                    <td><button onclick="getSimilarTicketID('12')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">13</td>
+                    <td>HP Laserjet printers not being classified correctly</td>
+                    <td><button onclick="getSimilarTicketID('13')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">14</td>
+                    <td>Line Feeds are not working in substitution variables in notification rules</td>
+                    <td><button onclick="getSimilarTicketID('14')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">15</td>
+                    <td>Object reference error when first launching web client - refresh makes it go away</td>
+                    <td><button onclick="getSimilarTicketID('15')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">16</td>
+                    <td>Unable to install client on Vista</td>
+                    <td><button onclick="getSimilarTicketID('16')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">18</td>
+                    <td>Need to have Clients auto update new strings.txt changes</td>
+                    <td><button onclick="getSimilarTicketID('18')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">19</td>
+                    <td>Domain Migration has no users able to login to ChangeGear</td>
+                    <td><button onclick="getSimilarTicketID('19')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">20</td>
+                    <td>Issues with Approver group behavior</td>
+                    <td><button onclick="getSimilarTicketID('20')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">21</td>
+                    <td>Users seem to be able to vote regardless of Approver status</td>
+                    <td><button onclick="getSimilarTicketID('21')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">22</td>
+                    <td>CG Does not show a CREATE separately from SUBMIT when SUBMIT is the initial action</td>
+                    <td><button onclick="getSimilarTicketID('22')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">23</td>
+                    <td>Object Reference Error on ACCEPT action</td>
+                    <td><button onclick="getSimilarTicketID('23')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">24</td>
+                    <td>RDE DL not showing up on MySunView</td>
+                    <td><button onclick="getSimilarTicketID('24')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">25</td>
+                    <td>ChangeGear error report from R-G Premier Bank of Puerto Rico</td>
+                    <td><button onclick="getSimilarTicketID('25')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">26</td>
+                    <td>ChangeGear error report from Rackable Systems, Inc.</td>
+                    <td><button onclick="getSimilarTicketID('26')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">29</td>
+                    <td>ChangeGear SDK questions</td>
+                    <td><button onclick="getSimilarTicketID('29')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">30</td>
+                    <td>Problems with Web Add Impacted Resources Response Time</td>
+                    <td><button onclick="getSimilarTicketID('30')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">33</td>
+                    <td>License Check (Realogy)</td>
+                    <td><button onclick="getSimilarTicketID('33')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">34</td>
+                    <td>Need MySunView Login Credentials</td>
+                    <td><button onclick="getSimilarTicketID('34')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">35</td>
+                    <td>Les: please advise: accessing change gear outside of epost office via internet</td>
+                    <td><button onclick="getSimilarTicketID('35')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">36</td>
+                    <td>ChangeGear error report from Purdue University</td>
+                    <td><button onclick="getSimilarTicketID('36')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">37</td>
+                    <td>Unexplained Change in Summary/Title</td>
+                    <td><button onclick="getSimilarTicketID('37')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">38</td>
+                    <td>PlannedStartDateTime Variable seems to break everything after it in announcement</td>
+                    <td><button onclick="getSimilarTicketID('38')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">39</td>
+                    <td>Issues with ChangeGear Business Policy Automation</td>
+                    <td><button onclick="getSimilarTicketID('39')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">44</td>
+                    <td>Customer needs to change Custom woarkflow after talking to managers</td>
+                    <td><button onclick="getSimilarTicketID('44')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">46</td>
+                    <td>Change Type is all showing up under first dropdown on web</td>
+                    <td><button onclick="getSimilarTicketID('46')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">49</td>
+                    <td>License Check (Edward Life Science)</td>
+                    <td><button onclick="getSimilarTicketID('49')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">50</td>
+                    <td>Workflow Questions</td>
+                    <td><button onclick="getSimilarTicketID('50')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">51</td>
+                    <td>Need to know how to Confirm that Notification rulese are sending</td>
+                    <td><button onclick="getSimilarTicketID('51')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">52</td>
+                    <td>ChangeGear error report from Blue Cross Blue Shield of Deleware</td>
+                    <td><button onclick="getSimilarTicketID('52')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">57</td>
+                    <td>License Check (Graphic Packaging)</td>
+                    <td><button onclick="getSimilarTicketID('57')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">58</td>
+                    <td>License Check (Bashas)</td>
+                    <td><button onclick="getSimilarTicketID('58')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">59</td>
+                    <td>License Check (Skipjack)</td>
+                    <td><button onclick="getSimilarTicketID('59')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">65</td>
+                    <td>Can Requesters be enabled to see implementation tab on web</td>
+                    <td><button onclick="getSimilarTicketID('65')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">66</td>
+                    <td>Notification Groups</td>
+                    <td><button onclick="getSimilarTicketID('66')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">67</td>
+                    <td>License Check (DOD Education)</td>
+                    <td><button onclick="getSimilarTicketID('67')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">68</td>
+                    <td>Need to be able to import new change types</td>
+                    <td><button onclick="getSimilarTicketID('68')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">69</td>
+                    <td>Need to take away the Submit for Approval action from Requesters Role</td>
+                    <td><button onclick="getSimilarTicketID('69')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">71</td>
+                    <td>Cannot change Type for existing/new Tracked Assets</td>
+                    <td><button onclick="getSimilarTicketID('71')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">73</td>
+                    <td>License Check (Honda)</td>
+                    <td><button onclick="getSimilarTicketID('73')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">74</td>
+                    <td>License Check (Atlas Pipeline)</td>
+                    <td><button onclick="getSimilarTicketID('74')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">75</td>
+                    <td>Web doesn&#39;t seem to work unless user is auto-registered</td>
+                    <td><button onclick="getSimilarTicketID('75')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">76</td>
+                    <td>Need to be able to see ALL TICKETS from web (including Closed)</td>
+                    <td><button onclick="getSimilarTicketID('76')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">77</td>
+                    <td>RDE Problems</td>
+                    <td><button onclick="getSimilarTicketID('77')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">78</td>
+                    <td>Object Reference Error on Web</td>
+                    <td><button onclick="getSimilarTicketID('78')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">79</td>
+                    <td>Upgrade seems to have overwritten workflow and custom dataset</td>
+                    <td><button onclick="getSimilarTicketID('79')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">80</td>
+                    <td>Approvers cannot Request More Info from Pending Approval state</td>
+                    <td><button onclick="getSimilarTicketID('80')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">81</td>
+                    <td>Can Day of week be included in date from substitution variable in email</td>
+                    <td><button onclick="getSimilarTicketID('81')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">82</td>
+                    <td>HP Printer information not being retrieved by RDE</td>
+                    <td><button onclick="getSimilarTicketID('82')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">83</td>
+                    <td>Object Reference error on left panel on web</td>
+                    <td><button onclick="getSimilarTicketID('83')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">84</td>
+                    <td>Wants to create alert to automatically close tickets</td>
+                    <td><button onclick="getSimilarTicketID('84')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">85</td>
+                    <td>Need to be able to sort by second level Location on Announcement portal</td>
+                    <td><button onclick="getSimilarTicketID('85')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">86</td>
+                    <td>Questions About need More Info state</td>
+                    <td><button onclick="getSimilarTicketID('86')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">88</td>
+                    <td>FW: Sunview ChangeGear Trial License</td>
+                    <td><button onclick="getSimilarTicketID('88')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">94</td>
+                    <td>License Check (Cirrus Design)</td>
+                    <td><button onclick="getSimilarTicketID('94')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">95</td>
+                    <td>Physical memory, Virtual memory, and BIOS not populating on Summary tab</td>
+                    <td><button onclick="getSimilarTicketID('95')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">96</td>
+                    <td>Scan History not updating when RDE is run. It seems to update on some but not others. Did not identify any pattern yet. </td>
+                    <td><button onclick="getSimilarTicketID('96')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">97</td>
+                    <td>Discovery not working properly with scheduled RDE scans</td>
+                    <td><button onclick="getSimilarTicketID('97')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">98</td>
+                    <td>Need to know what issues were resolved in MR2</td>
+                    <td><button onclick="getSimilarTicketID('98')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">99</td>
+                    <td>How do we change the password for the ChangeGear service?</td>
+                    <td><button onclick="getSimilarTicketID('99')">Similar Tickets</button></td>
+                </tr>
+                <tr>
+                    <td align="right">100</td>
+                    <td>Deleted Alert seems to be still firing</td>
+                    <td><button onclick="getSimilarTicketID('100')">Similar Tickets</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>

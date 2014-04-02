@@ -7,7 +7,7 @@ namespace SeniorProjectWeb.Models
 {
     public class Ticket
     {
-        public double rating { get; set; }
         public string id { get; set; }
+        public double rating { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace SeniorProjectWeb.Controllers
         }
 
         [HttpGet]
-        public string GetSimilarTickets(string summary)
+        public string GetSimilarTicketsSummary(string summary)
         {
             StringCompressible ticket = new StringCompressible(summary);
 
@@ -48,6 +48,44 @@ namespace SeniorProjectWeb.Controllers
                 similarTickets.Add(new Ticket {id = element.Item2.ItemID, rating = element.Item1 });
             }
             
+            return JsonConvert.SerializeObject(similarTickets);
+
+        }
+        [HttpGet]
+        public string GetSimilarTicketsID(string searchID)
+        {
+            Similarity simObject = new Similarity();
+            simObject.Threshold = 0.45;
+
+            List<StringCompressible> DataSet = new List<StringCompressible>();
+
+            //Open the CSV to read in the data set
+            var CSVReader = new StreamReader(System.IO.File.OpenRead(Path.Combine(Server.MapPath("~/App_Data"), "IncidentRequest_Gold5k.csv")));
+
+            //Read in the "golden set" and add the entities to DataSet
+            while (!CSVReader.EndOfStream)
+            {
+                var row = CSVReader.ReadLine();
+                DataSet.Add(new StringCompressible(row.Substring(0, row.IndexOf(',')), row.Substring(row.IndexOf(',') + 1)));
+                //Console.WriteLine("itemID: {0}, summary: {1}", row.Substring(0, row.IndexOf(',')), row.Substring(row.IndexOf(',')+1));
+            }
+
+            List<Ticket> similarTickets = new List<Ticket>();
+            List<Tuple<double, StringCompressible>> result = new List<Tuple<double, StringCompressible>>();
+
+            foreach (StringCompressible ticket in DataSet)
+            {
+                if (ticket.ItemID.Equals(searchID))
+                {
+                    result = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
+                }
+            }
+
+            foreach (Tuple<double, StringCompressible> element in result)
+            {
+                similarTickets.Add(new Ticket { id = element.Item2.ItemID, rating = element.Item1 });
+            }
+
             return JsonConvert.SerializeObject(similarTickets);
 
         }

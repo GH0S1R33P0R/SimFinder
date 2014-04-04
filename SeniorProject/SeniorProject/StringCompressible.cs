@@ -12,6 +12,8 @@ namespace SeniorProject
         private int complexity;    // Size of the compressed ticket
         private byte[] data;       // Data field of the ticket
         private string itemID;     // Item ID of the ticket
+        private string summary;
+        private string oid;
 
         //Default Constructor
         public StringCompressible()
@@ -21,16 +23,18 @@ namespace SeniorProject
         }
        
         //Constructor that takes one string to set the data field
-        public StringCompressible(string summary)
+        public StringCompressible(string summaryValue)
         {
-            data = Encoding.ASCII.GetBytes(summary);
+            data = Encoding.ASCII.GetBytes(summaryValue);
+            summary = summaryValue;
         }
 
         //Constructor that takes two strings to set the data field and item ID
-        public StringCompressible(string ID, string summary)
+        public StringCompressible(string ID, string summaryValue)
         {
-            data = Encoding.ASCII.GetBytes(summary);
-            itemID = ID;
+            data = Encoding.ASCII.GetBytes(summaryValue);
+            oid = ID;
+            summary = summaryValue;
         }
 
         // Return the data as a byte array
@@ -51,6 +55,16 @@ namespace SeniorProject
         {
             get {return this.itemID; }
             set { this.itemID = value; }
+        }
+
+        public string OID
+        {
+            get { return this.oid; }
+        }
+
+        public string Summary
+        {
+            get { return this.summary; }
         }
     }
 }

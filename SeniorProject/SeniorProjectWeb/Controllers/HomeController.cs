@@ -65,6 +65,8 @@ namespace SeniorProjectWeb.Controllers
         [HttpGet]
         public string GetSimilarTicketsID(string searchID)
         {
+            searchID = Regex.Replace(searchID,"IR-0+", "");
+
             if (DataSet.Count == 0)
             {
                 setDataSet();

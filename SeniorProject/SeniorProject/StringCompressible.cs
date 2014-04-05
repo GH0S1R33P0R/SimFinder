@@ -25,14 +25,14 @@ namespace SeniorProject
         //Constructor that takes one string to set the data field
         public StringCompressible(string summaryValue)
         {
-            data = Encoding.ASCII.GetBytes(summaryValue);
+            data = Encoding.ASCII.GetBytes(summaryValue.ToUpper());
             summary = summaryValue;
         }
 
         //Constructor that takes two strings to set the data field and item ID
         public StringCompressible(string ID, string summaryValue)
         {
-            data = Encoding.ASCII.GetBytes(summaryValue);
+            data = Encoding.ASCII.GetBytes(summaryValue.ToUpper());
             oid = ID;
             summary = summaryValue;
         }

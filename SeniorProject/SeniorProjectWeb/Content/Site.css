@@ -40,3 +40,39 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+#results,
+#search
+{
+    margin-top: 20px;
+}
+#results
+{
+    width: 66.6%;
+}
+
+#search_ItemID
+{
+    width: 100px;
+    margin-right: 5px;
+}
+
+#search_Summary
+{
+    width: 250px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.itemID
+{
+}
+
+.summary
+{
+}
+
+.view
+{
+    border-color: transparent !important;
+}

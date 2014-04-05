@@ -19,6 +19,10 @@ namespace SeniorProjectWeb.Controllers
         {
             return View();
         }
+        public ActionResult About()
+        {
+            return View();
+        }
 
         private void setDataSet()
         {
@@ -28,72 +32,76 @@ namespace SeniorProjectWeb.Controllers
             //Read in the "golden set" and add the entities to DataSet
             while (!CSVReader.EndOfStream)
             {
-                var row = CSVReader.ReadLine();
-                DataSet.Add(new StringCompressible(row.Substring(0, row.IndexOf(',')), row.Substring(row.IndexOf(',') + 12)));
-                DataSet.Last().ItemID = Regex.Replace(row.Substring(row.IndexOf(',')+1, 10),"IR-0+", "");
-                //Console.WriteLine("itemID: {0}, summary: {1}", row.Substring(0, row.IndexOf(',')), row.Substring(row.IndexOf(',')+1));
+                var row = CSVReader.ReadLine().Split(',');
+                var entity = new StringCompressible(row[0], row[2]);
+                entity.ItemID = Regex.Replace(row[1], "IR-0+", "");
+                simObject.SetComplexity(entity);
+                DataSet.Add(entity);
+            }
+        }
+
+        [HttpPost]
+        public void Init()
+        {
+            if (DataSet.Count == 0)
+            {
+                setDataSet();
+                SetThreshold("45");
             }
         }
 
         [HttpGet]
         public string GetSimilarTicketsSummary(string summary)
         {
-            if (DataSet.Count == 0)
+            Init();
+
+            var ticket = new StringCompressible(summary);
+            simObject.SetComplexity(ticket);
+
+            var results = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
+
+            var similarTickets = new List<Ticket>();
+            foreach (var element in results)
             {
-                setDataSet();
-                if (DataSet.Count == 0) return JsonConvert.SerializeObject("error");
-                SetThreshold("45");
-            }
-
-            StringCompressible ticket = new StringCompressible(summary);
-            
-
-            List<Ticket> similarTickets = new List<Ticket>();
-           
-            List<Tuple<double, StringCompressible>> result = new List<Tuple<double, StringCompressible>>();
-
-            result = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
-
-            foreach (Tuple<double, StringCompressible> element in result)
-            {
-                similarTickets.Add(new Ticket {oid = element.Item2.OID, itemID = element.Item2.ItemID, rating = element.Item1, summary = element.Item2.Summary });
+                similarTickets.Add(new Ticket {
+                    oid = element.Item2.OID,
+                    itemID = element.Item2.ItemID,
+                    rating = element.Item1,
+                    summary = element.Item2.Summary
+                });
             }
 
             return JsonConvert.SerializeObject(similarTickets);
-
         }
+
         [HttpGet]
         public string GetSimilarTicketsID(string searchID)
         {
-            searchID = Regex.Replace(searchID,"IR-0+", "");
+            Init();
 
-            if (DataSet.Count == 0)
+            searchID = Regex.Replace(searchID, "IR-0+", "");
+            var ticket = (from entity in DataSet
+                          where entity.ItemID == searchID
+                          select entity).First();
+            simObject.SetComplexity(ticket);
+
+            var results = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
+
+            var similarTickets = new List<Ticket>();
+            foreach (var element in results)
             {
-                setDataSet();
-                if (DataSet.Count == 0) return JsonConvert.SerializeObject("error");
-                SetThreshold("45");
-            }
-
-            List<Ticket> similarTickets = new List<Ticket>();
-            List<Tuple<double, StringCompressible>> result = new List<Tuple<double, StringCompressible>>();
-
-            foreach (StringCompressible ticket in DataSet)
-            {
-                if (ticket.ItemID.Equals(searchID))
-                {
-                    result = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
-                }
-            }
-
-            foreach (Tuple<double, StringCompressible> element in result)
-            {
-                similarTickets.Add(new Ticket { oid = element.Item2.OID, itemID = element.Item2.ItemID, rating = element.Item1, summary = element.Item2.Summary });
+                similarTickets.Add(new Ticket {
+                    oid = element.Item2.OID,
+                    itemID = element.Item2.ItemID,
+                    rating = element.Item1,
+                    summary = element.Item2.Summary
+                });
             }
 
             return JsonConvert.SerializeObject(similarTickets);
-
         }
 
+        [HttpPost]
         public string SetThreshold(string value)
         {
             simObject.Threshold = (double)System.Convert.ToInt64(value) / 100;

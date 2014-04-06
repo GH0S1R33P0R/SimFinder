@@ -1,110 +1,116 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "USF Senior Project";
 }
 <script type="text/javascript">
+    angular.module('SeniorProjectWeb', []).controller('DemoCtrl', ['$scope', '$window', function ($scope, $window) {
+        $scope.active = false;
 
-    function getSimilarTicket(value) {
+        $scope.query = {
+            ItemID: '',
+            Summary: '',
+        };
+
+        $scope.results = [];
+
+        $scope.getSimilarTicketsByItemID = function () {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: '@Url.Action("GetSimilarTicketsID", "Home")',
+                data: { searchID: $scope.query.ItemID },
+                success: function (results) {
+                    $scope.results = angular.fromJson(results);
+                }
+            });
+        };
+
+        $scope.getSimilarTicketsBySummary = function () {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: '@Url.Action("GetSimilarTicketsSummary", "Home")',
+                data: { summary: $scope.query.Summary },
+                success: function (results) {
+                    $scope.results = angular.fromJson(results);
+                }
+            });
+        };
+
+        $scope.search = function () {
+            if ($scope.query.ItemID.length > 0) {
+                $scope.getSimilarTicketsByItemID();
+            } else if ($scope.query.Summary.length > 0) {
+                $scope.getSimilarTicketsBySummary();
+            }
+            $scope.active = true;
+        };
+
+        $scope.openCUSPIncidentDialog = function (result) {
+            var url = 'http://cusp/CGWeb/MainUI/ServiceDesk/SDItemEditPanel.aspx?boundtable=IIncidentRequest&ID=' + result.oid;
+            var dialog = $window.open(url);
+            dialog.focus();
+        };
 
         $.ajax({
-            type: 'GET',
-            url: '@Url.Action("GetSimilarTicketsSummary", "Home")',
-            data: { summary: value },
-            success: successFunc,
-            error: errorFunc
+            type: 'POST',
+            async: false,
+            url: '@Url.Action("Init", "Home")'
         });
-
-        function successFunc(data) {
-            alert(data);
-        }
-
-        function errorFunc() {
-            alert('error');
-        }
-    };
-    function getSimilarTicketID(value) {
-
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("GetSimilarTicketsID", "Home")',
-            data: { searchID: value },
-            success: successFunc,
-            error: errorFunc
-        });
-
-        function successFunc(data) {
-            alert(data);
-        }
-
-        function errorFunc() {
-            alert('error');
-        }
-    };
+    }]);
 </script>
 <body>
-    <div>
-        <input type="text" id="text_summary" name="summary" size="250" placeholder="Summary">
-        <button onclick="getSimilarTicket(document.getElementById('text_summary').value)">Submit</button>
-    </div>
-    <div>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th title="Field #1">OID</th>
-                    <th title="Field #2">Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td align="right">1</td>
-                    <td>Calendar picker doesn&#39;t work on web</td>
-                    <td><button onclick="getSimilarTicketID('1001')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">2</td>
-                    <td>3.0 - Items Previously Discovered and Unmanaged are rediscovered and put in Newly Disc.</td>
-                    <td><button onclick="getSimilarTicketID('5001')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">3</td>
-                    <td>3.0 - Error Adding impacted resources to RFCs</td>
-                    <td><button onclick="getSimilarTicketID('5002')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">4</td>
-                    <td>Alert is no longer updating RISK correctly</td>
-                    <td><button onclick="getSimilarTicketID('5003')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">5</td>
-                    <td>Change Type on Web not sorting in 2nd and 3rd Dropdown</td>
-                    <td><button onclick="getSimilarTicketID('5004')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">6</td>
-                    <td>Client takes 2 min to start up on first startup after reboot</td>
-                    <td><button onclick="getSimilarTicketID('5005')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">7</td>
-                    <td>Comments are Disappearing</td>
-                    <td><button onclick="getSimilarTicketID('5006')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">8</td>
-                    <td>Domain name incorrect on windows2000 scans</td>
-                    <td><button onclick="getSimilarTicketID('5007')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">9</td>
-                    <td>Error Approving RFC</td>
-                    <td><button onclick="getSimilarTicketID('5008')">Similar Tickets</button></td>
-                </tr>
-                <tr>
-                    <td align="right">10</td>
-                    <td>Error scanning Dell Print Servers</td>
-                    <td><button onclick="getSimilarTicketID('5009')">Similar Tickets</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div ng-controller="DemoCtrl">
+        <form id="search" class="form-inline">
+            <div class="form-group">
+                <input ng-model="query.ItemID" ng-focus="query.Summary = ''" type="text" id="search_ItemID" placeholder="ItemID" class="form-control">
+                <span>OR</span>
+                <input ng-model="query.Summary" ng-focus="query.ItemID = ''" type="text" id="search_Summary" placeholder="Summary" class="form-control">
+                <button class="btn btn-default" ng-disabled="query.ItemID.length == 0 && query.Summary.length == 0" ng-click="search()">Submit</button>
+
+            </div>
+
+        </form>
+        <div id="results">
+            <div class="table-responsive" ng-show="results.length > 0">
+                <table class="table table-hover table-condensed">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ItemID</th>
+
+                            <th>Summary</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr ng-repeat="result in results track by $index">
+
+                            <td class="col-sm-1 itemID">{{result.itemID}}</td>
+
+                            <td class="col-sm-10 summary">{{result.summary}}</td>
+
+                            <td class="col-sm-1 view">
+                                <button class="btn btn-sm btn-default" ng-click="openCUSPIncidentDialog(result)">View</button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div ng-show="results.length == 0 && active">
+                <p class="bg-info">No results found.</p>
+
+            </div>
+
+        </div>
     </div>
 </body>

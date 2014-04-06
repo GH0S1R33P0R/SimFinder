@@ -177,7 +177,7 @@ namespace SeniorProject
         // Return the NCD value between two tickets
         public double GetSimilarity(ICompressible entity1, ICompressible entity2)
         {
-            return getNCD(entity1, entity2);
+            return getMCD(entity1, entity2);
         }
 
         // Given a test ticket and a set of tickets, return a sorted list of all tickets within the

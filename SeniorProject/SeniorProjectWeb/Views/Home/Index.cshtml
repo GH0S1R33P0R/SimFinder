@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "USF Senior Project";
+}
+<script type="text/javascript">
+    angular.module('SeniorProjectWeb', []).controller('DemoCtrl', ['$scope', '$window', function ($scope, $window) {
+        $scope.active = false;
+
+        $scope.query = {
+            ItemID: '',
+            Summary: '',
+        };
+
+        $scope.results = [];
+
+        $scope.getSimilarTicketsByItemID = function () {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: '@Url.Action("GetSimilarTicketsID", "Home")',
+                data: { searchID: $scope.query.ItemID },
+                success: function (results) {
+                    $scope.results = angular.fromJson(results);
+                }
+            });
+        };
+
+        $scope.getSimilarTicketsBySummary = function () {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: '@Url.Action("GetSimilarTicketsSummary", "Home")',
+                data: { summary: $scope.query.Summary },
+                success: function (results) {
+                    $scope.results = angular.fromJson(results);
+                }
+            });
+        };
+
+        $scope.search = function () {
+            if ($scope.query.ItemID.length > 0) {
+                $scope.getSimilarTicketsByItemID();
+            } else if ($scope.query.Summary.length > 0) {
+                $scope.getSimilarTicketsBySummary();
+            }
+            $scope.active = true;
+        };
+
+        $scope.openCUSPIncidentDialog = function (result) {
+            var url = 'http://cusp/CGWeb/MainUI/ServiceDesk/SDItemEditPanel.aspx?boundtable=IIncidentRequest&ID=' + result.oid;
+            var dialog = $window.open(url);
+            dialog.focus();
+        };
+
+        $.ajax({
+            type: 'POST',
+            async: false,
+            url: '@Url.Action("Init", "Home")'
+        });
+    }]);
+</script>
+<body>
+    <div ng-controller="DemoCtrl">
+        <form id="search" class="form-inline">
+            <div class="form-group">
+                <input ng-model="query.ItemID" ng-focus="query.Summary = ''" type="text" id="search_ItemID" placeholder="ItemID" class="form-control">
+                <span>OR</span>
+                <input ng-model="query.Summary" ng-focus="query.ItemID = ''" type="text" id="search_Summary" placeholder="Summary" class="form-control">
+                <button class="btn btn-default" ng-disabled="query.ItemID.length == 0 && query.Summary.length == 0" ng-click="search()">Submit</button>
+
+            </div>
+
+        </form>
+        <div id="results">
+            <div class="table-responsive" ng-show="results.length > 0">
+                <table class="table table-hover table-condensed">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ItemID</th>
+
+                            <th>Summary</th>
+
+                            <th>Confidance Rating</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr ng-repeat="result in results track by $index">
+
+                            <td class="col-sm-1 itemID">{{result.itemID}}</td>
+
+                            <td class="col-sm-10 summary">{{result.summary}}</td>
+
+                            <td class="col-sm-1 rating">{{result.rating}}</td>
+
+                            <td class="col-sm-1 view">
+                                <button class="btn btn-sm btn-default" ng-click="openCUSPIncidentDialog(result)">View</button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div ng-show="results.length == 0 && active">
+                <p class="bg-info">No results found.</p>
+
+            </div>
+
+        </div>
+    </div>
+</body>

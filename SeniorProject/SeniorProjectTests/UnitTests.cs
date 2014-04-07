@@ -5,6 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace SeniorProjectTests
 {
@@ -112,92 +114,28 @@ namespace SeniorProjectTests
             //Create the expected outcome 2D list
             List<List<string>> expectedLists = new List<List<string>>();
 
-            //Create the list of tickets that match ticket 1
-            List<string> expectedMatch1 = new List<string>();
-            expectedMatch1.Add("IR-0026018");
-            expectedMatch1.Add("IR-0029185");
-            expectedMatch1.Add("IR-0027693");
-            expectedMatch1.Add("IR-0027472");
-            expectedMatch1.Add("IR-0027625");
-            expectedMatch1.Add("IR-0029334");
-            expectedLists.Add(expectedMatch1);
+            //Read the expected outcomes json file into a string
+            StreamReader fileReader = new StreamReader(File.OpenRead(Path.Combine(currentDirectory, "expectedOutcomes.json")));
+            string jsonText = fileReader.ReadToEnd();
+            JsonTextReader JReader = new JsonTextReader(new StringReader(jsonText));
 
-            //Create the list of tickets that match ticket 2
-            List<string> expectedMatch2 = new List<string>();
-            expectedMatch2.Add("IR-0026036");
-            expectedMatch2.Add("IR-0026720");
-            expectedLists.Add(expectedMatch2);
-
-            //Create the list of tickets that match ticket 3
-            List<string> expectedMatch3 = new List<string>();
-            expectedMatch3.Add("IR-0026137");
-            expectedLists.Add(expectedMatch3);
-
-            //Create the list of tickets that match ticket 4
-            List<string> expectedMatch4 = new List<string>();
-            expectedMatch4.Add("IR-0026720");
-            expectedMatch4.Add("IR-0026036");
-            expectedLists.Add(expectedMatch4);
-
-            //Create the list of tickets that match ticket 5
-            List<string> expectedMatch5 = new List<string>();
-            expectedMatch5.Add("IR-0027472");
-            expectedMatch5.Add("IR-0029185");
-            expectedMatch5.Add("IR-0027693");
-            expectedMatch5.Add("IR-0026018");
-            expectedMatch5.Add("IR-0027625");
-            expectedMatch5.Add("IR-0029334");
-            expectedLists.Add(expectedMatch5);
-
-            //Create the list of tickets that match ticket 6
-            List<string> expectedMatch6 = new List<string>();
-            expectedMatch6.Add("IR-0027625");
-            expectedMatch6.Add("IR-0029185");
-            expectedMatch6.Add("IR-0027693");
-            expectedMatch6.Add("IR-0027472");
-            expectedMatch6.Add("IR-0026018");
-            expectedMatch6.Add("IR-0029334");
-            expectedLists.Add(expectedMatch6);
-
-            //Create the list of tickets that match ticket 7
-            List<string> expectedMatch7 = new List<string>();
-            expectedMatch7.Add("IR-0027693");
-            expectedMatch7.Add("IR-0029185");
-            expectedMatch7.Add("IR-0026018");
-            expectedMatch7.Add("IR-0027472");
-            expectedMatch7.Add("IR-0027625");
-            expectedMatch7.Add("IR-0029334");
-            expectedLists.Add(expectedMatch7);
-
-            //Create the list of tickets that match ticket 8
-            List<string> expectedMatch8 = new List<string>();
-            expectedMatch8.Add("IR-0027791");
-            expectedLists.Add(expectedMatch8);
-
-            //Create the list of tickets that match ticket 9
-            List<string> expectedMatch9 = new List<string>();
-            expectedMatch9.Add("IR-0028919");
-            expectedLists.Add(expectedMatch9);
-
-            //Create the list of tickets that match ticket 10
-            List<string> expectedMatch10 = new List<string>();
-            expectedMatch10.Add("IR-0029185");
-            expectedMatch10.Add("IR-0026018");
-            expectedMatch10.Add("IR-0027693");
-            expectedMatch10.Add("IR-0027472");
-            expectedMatch10.Add("IR-0027625");
-            expectedMatch10.Add("IR-0029334");
-            expectedLists.Add(expectedMatch10);
-
-            //Create the list of tickets that match ticket 11
-            List<string> expectedMatch11 = new List<string>();
-            expectedMatch11.Add("IR-0029334");
-            expectedMatch11.Add("IR-0029185");
-            expectedMatch11.Add("IR-0027693");
-            expectedMatch11.Add("IR-0027472");
-            expectedMatch11.Add("IR-0027625");
-            expectedMatch11.Add("IR-0026018");
-            expectedLists.Add(expectedMatch11);
+            //Populate the expectedLists 2D list with the expected outcomes
+            while (JReader.Read())
+            {
+                List<string> expectedMatches = new List<string>();
+                if (JReader.TokenType.ToString() == "PropertyName" && JReader.Value.ToString() != "expectedOutcomes")
+                {
+                    expectedMatches.Add(JReader.Value.ToString());
+                    JReader.Read();
+                    JReader.Read();
+                    while (JReader.TokenType.ToString() != "EndArray")
+                    {
+                        expectedMatches.Add(JReader.Value.ToString());
+                        JReader.Read();
+                    }
+                    expectedLists.Add(expectedMatches);
+                }
+            }
 
             //Similarity object to use for FindSimilarEntities
             Similarity simTest = new Similarity();

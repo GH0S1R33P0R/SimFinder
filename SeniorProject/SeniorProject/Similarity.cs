@@ -99,10 +99,14 @@ namespace SeniorProject
         {
             double MCD_numerator;
             double MCD_result;
-            
+
+            // Create two StringCompressible objects of the entities concatenated to themselves
+            ICompressible AA = new StringCompressible (entity1.ToByteArray().Concat(entity1.ToByteArray()).ToString());
+            ICompressible BB = new StringCompressible (entity2.ToByteArray().Concat(entity2.ToByteArray()).ToString());
+
             // Find c(AA) and c(BB)
-            double MCD_AA = (double) compressionSize(entity1.ToByteArray().Concat(entity1.ToByteArray()).ToArray());
-            double MCD_BB = (double) compressionSize(entity2.ToByteArray().Concat(entity2.ToByteArray()).ToArray());
+            double MCD_AA = (double) GetComplexity(AA);
+            double MCD_BB = (double) GetComplexity(BB);
 
             // Find c(AB)
             byte[] combinedArray = entity1.ToByteArray().Concat(entity2.ToByteArray()).ToArray();

@@ -13,8 +13,8 @@ namespace SeniorProjectWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private List<StringCompressible> DataSet = new List<StringCompressible>();
-        private Similarity simObject = new Similarity();
+        private static List<StringCompressible> DataSet = new List<StringCompressible>();
+        private static Similarity simObject = new Similarity();
         public ActionResult Index()
         {
             return View();

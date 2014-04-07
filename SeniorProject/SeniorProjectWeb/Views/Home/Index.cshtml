@@ -82,6 +82,8 @@
 
                             <th>Summary</th>
 
+                            <th>Confidance Rating</th>
+
                         </tr>
 
                     </thead>
@@ -93,6 +95,8 @@
                             <td class="col-sm-1 itemID">{{result.itemID}}</td>
 
                             <td class="col-sm-10 summary">{{result.summary}}</td>
+
+                            <td class="col-sm-1 rating">{{result.rating}}</td>
 
                             <td class="col-sm-1 view">
                                 <button class="btn btn-sm btn-default" ng-click="openCUSPIncidentDialog(result)">View</button>

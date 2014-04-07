@@ -101,8 +101,8 @@ namespace SeniorProject
             double MCD_result;
 
             // Create two StringCompressible objects of the entities concatenated to themselves
-            ICompressible AA = new StringCompressible (entity1.ToByteArray().Concat(entity1.ToByteArray()).ToString());
-            ICompressible BB = new StringCompressible (entity2.ToByteArray().Concat(entity2.ToByteArray()).ToString());
+            ICompressible AA = new StringCompressible (Encoding.ASCII.GetString(entity1.ToByteArray().Concat(entity1.ToByteArray()).ToArray()));
+            ICompressible BB = new StringCompressible (Encoding.ASCII.GetString(entity2.ToByteArray().Concat(entity2.ToByteArray()).ToArray()));
 
             // Find c(AA) and c(BB)
             double MCD_AA = (double) GetComplexity(AA);

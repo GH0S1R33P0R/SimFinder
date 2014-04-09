@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeniorProjectTests", "Senio
 		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeniorProject", "SeniorProject\SeniorProject.csproj", "{8D2D5F3C-E1C2-4FED-91AF-C85994924053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimFinder", "SeniorProject\SimFinder.csproj", "{8D2D5F3C-E1C2-4FED-91AF-C85994924053}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{322B60FE-96E2-41FE-B66E-74596EBD062D}"
 	ProjectSection(SolutionItems) = preProject

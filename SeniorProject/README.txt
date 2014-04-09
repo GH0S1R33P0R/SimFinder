@@ -1,5 +1,5 @@
 
-SeniorProject:
+SimFinder:
     Main Library, contains interfaces for the functionality.
         ICompressible: Interface for object to be compressed.
             ToByteArray: Returns a byte array representing the object.
@@ -11,13 +11,15 @@ SeniorProject:
             IsSimilar:  Returns true two objects' similarity is better than the threshold.
             Threshould: What level of similarity should two ICompressibles be before we define them to be similar.
             FinSimilarEntities: Return a list of similar ICompressible Entities to a single ICompressible.
-SeniorProjectUtils:
+Utils:
     Implementations to the Interfaces in SeniorProject.
-SeniorProjectWeb:
+WebDemo:
     A web demonstration to show the library in action.
     For this project to function, IncidentRequest.csv or a similar file needs to be in ~/App_Data.
-SeniorProject Tests:
+Tests:
     This is where Tests for the library are placed.
+Analytics:
+    A test driver application.
     
 
 

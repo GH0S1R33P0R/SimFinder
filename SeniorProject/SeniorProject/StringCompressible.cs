@@ -15,21 +15,30 @@ namespace SeniorProject
         private string summary;
         private string oid;
 
-        //Default Constructor
+        /// <summary>
+        /// Default StringCompressible constructor
+        /// </summary>
         public StringCompressible()
         {
             complexity = 0;
             data = new byte[0];
         }
        
-        //Constructor that takes one string to set the data field
+        /// <summary>
+        /// Overloaded constructor that takes one string
+        /// </summary>
+        /// <param name="summary">String value to set the "data" data member</param>
         public StringCompressible(string summaryValue)
         {
             data = Encoding.ASCII.GetBytes(summaryValue.ToUpper());
             summary = summaryValue;
         }
 
-        //Constructor that takes two strings to set the data field and item ID
+        /// <summary>
+        /// Constructor that takes two strings
+        /// </summary>
+        /// <param name="ID">String to set the itemID data member</param>
+        /// <param name="summary">String to set the "data" data member</param>
         public StringCompressible(string ID, string summaryValue)
         {
             data = Encoding.ASCII.GetBytes(summaryValue.ToUpper());
@@ -50,7 +59,9 @@ namespace SeniorProject
             set { this.complexity = value; }
         }
 
-        // Accessor and mutator for item ID value
+        /// <summary>
+        /// Accessor and mutator for itemID value
+        /// </summary>
         public string ItemID
         {
             get {return this.itemID; }

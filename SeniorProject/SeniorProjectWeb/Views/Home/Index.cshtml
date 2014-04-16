@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SimFinders";
+    ViewBag.Title = "SimFinder";
 }
 <script type="text/javascript">
     angular.module('SeniorProjectWeb', []).controller('DemoCtrl', ['$scope', '$window', function ($scope, $window) {
@@ -62,7 +62,7 @@
     <div ng-controller="DemoCtrl">
         <form id="search" class="form-inline">
             <div class="form-group">
-                <input ng-model="query.ItemID" ng-focus="query.Summary = ''" type="text" id="search_ItemID" placeholder="ItemID" class="form-control">
+                <input ng-model="query.ItemID" ng-focus="query.Summary = ''" type="text" id="search_ItemID" placeholder="ID" class="form-control">
                 <span>OR</span>
                 <input ng-model="query.Summary" ng-focus="query.ItemID = ''" type="text" id="search_Summary" placeholder="Summary" class="form-control">
                 <button class="btn btn-default" ng-disabled="query.ItemID.length == 0 && query.Summary.length == 0" ng-click="search()">Submit</button>

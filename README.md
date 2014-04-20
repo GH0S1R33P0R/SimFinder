@@ -1,25 +1,47 @@
-USFSpr2014SunView
+Description
 ==================
-Working repository for SunView group in USF's Senior Project Spring 2014.
+
+A Library to aid in the finding of similar tickets.
+This library uses the [Normalized Compression Distance](http://en.wikipedia.org/wiki/Normalized_compression_distance)  to compare objects against each other.
+
+The code for this library is split up into sub-projects for ease of use and maintainability.
 
 
-Project Requirements
-==================
-The final project should have the following requirements fulfilled.
+SimFinder
+=================
+Contains interfaces for the functionality.
 
-1. Produce a confidence rating between two tickets. 
+ICompressible: Object to be compressed
 
-    1.1 The system should be able to produce the results in a reasonable amount of time that scales linearly with the number of tickets that must be searched. The minimum acceptable would be one second for every thousand tickets to be searched.
-    
-    1.2 From a collection of tickets, produce a ranked list of matching tickets sorted by confidence rating, it should generally be detectable by a user why the ticket was considered similar and why a given ticket ranked higher than another
-2. Be written in C#, or another .net compatible language. 
-3. Be capable of performing generic comparisons. 
+|Member | Description|
+|------|------------|
+| ToByteArray() | Returns a byte[] representation of the entity |
+| Complexity    | Stored complexity value |
 
-    3.1 Can work on non-text fields in a ticket.
-4. Have calculations pre-computed and stored, if possible.
+ISimililarity : Interface for object used to perform similarity calculation
 
-There are also two advanced (optional) requirements for this project:
+|Member | Description|
+|------|------------|
+| GetComplexity(ICompressible entity) | Returns the complexity of the ICompressible Object passed in |
+| SetComplexity(ICompressible entity) | Sets the complexity of the ICompressible Object passed in |
+| GetSimilarity(ICompressible entity1, ICompressible entity2) | Returns a real number representing the similarity between entity1 and entity2 |
+|  IsSimilar(ICompressible entity1, ICompressible entity)  | Returns true if two entitys are similar | 
+| Threshold | What level of similarity should two ICompressibles be before we define them to be similar |
+| FindSimilarEntities(ICompressible entity, ICompressible[] dataSet) | Return a list of similar ICompressible Entities to a single ICompressible |
 
-1. Provide a method for prioritizing speed vs. space.
-2. Provide a method for clustering similar tickets.
 
+SimFinderUtils
+=================
+Our own implementation to the Interfaces that we have defined.
+These classes should be re-written to match the data of your own implementation if needed.
+
+|Member | Description|
+|-------|------------|
+|Similarity.cs         | A comparison class implementing ISimiliarity using NCD |
+|StringCompressible.cs | Compressible class for Strings |
+|TicketCompressible.cs | Compressible class for IT-Support Tickets |
+
+WebDemo
+=================
+
+An ASP.net based demonstraction of this library in use.

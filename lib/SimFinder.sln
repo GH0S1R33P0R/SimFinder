@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{968604
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDemo", "SeniorProjectWeb\WebDemo.csproj", "{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDemo", "WebDemo\WebDemo.csproj", "{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
 	EndProjectSection

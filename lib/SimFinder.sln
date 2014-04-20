@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "SeniorProjectTests\Tests.csproj", "{F184FCA5-5A31-477F-ABD3-CAF73CED2C52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F184FCA5-5A31-477F-ABD3-CAF73CED2C52}"
 	ProjectSection(ProjectDependencies) = postProject
 		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimFinder", "SeniorProject\SimFinder.csproj", "{8D2D5F3C-E1C2-4FED-91AF-C85994924053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimFinder", "SimFinder\SimFinder.csproj", "{8D2D5F3C-E1C2-4FED-91AF-C85994924053}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{322B60FE-96E2-41FE-B66E-74596EBD062D}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.txt = README.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics", "SeniorProjectAnalytics\Analytics.csproj", "{5DACCFC8-6D76-46B9-8810-B49D43A36D71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics", "Analytics\Analytics.csproj", "{5DACCFC8-6D76-46B9-8810-B49D43A36D71}"
 	ProjectSection(ProjectDependencies) = postProject
 		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
 	EndProjectSection

@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDemo", "WebDemo\WebDemo.
 		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "SeniorProjectUtils\Utils.csproj", "{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -68,7 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SeniorProjectUtils\Utils.csproj">
+    <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{791bcde3-1e26-4ef9-bb6f-642d43bae947}</Project>
       <Name>Utils</Name>
     </ProjectReference>

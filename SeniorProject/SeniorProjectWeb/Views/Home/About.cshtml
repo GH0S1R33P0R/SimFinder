@@ -1,7 +1,13 @@
 ﻿@{
     ViewBag.Title = "About";
 }
+<script type="text/javascript">
+    angular.module('SeniorProjectWeb', []).controller('aboutCtrl', function () { });
+</script>
+<div ng-controller="aboutCtrl">
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<p>This web-application demostrates an usecase for a Library developed to aid in the finding of similar tickets. The library uses the <a href="http://en.wikipedia.org/wiki/Normalized_compression_distance">Normalized Compression Distance</a> to compare objects against each other.</p>
+<p>For more information about the library please visit <a href="https://github.com/GH0S1R33P0R/SimFinder">SimFinder on GitHub</a>.</p>
+</div>

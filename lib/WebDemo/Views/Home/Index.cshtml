@@ -1,16 +1,31 @@
 ﻿@{
-    ViewBag.Title = "USF Senior Project";
+    ViewBag.Title = "SimFinder";
 }
 <script type="text/javascript">
-    angular.module('SeniorProjectWeb', []).controller('DemoCtrl', ['$scope', '$window', function ($scope, $window) {
+    angular.module('SeniorProjectWeb', []).controller('DemoCtrl', ['$scope', '$window', '$location', function ($scope, $window, $location) {
         $scope.active = false;
-
+        $scope.location = $location;
+        $scope.rating = false;
         $scope.query = {
             ItemID: '',
             Summary: '',
         };
 
+        $scope.init = function () {
+            var tmp = ($location.search());
+            var tmp2 = ($location.search()).ItemID;
+            if (typeof ($location.search()).ItemID != 'undefined' && ($location.search()).ItemID != true) {
+                $scope.query.ItemID = ($location.search()).ItemID;
+                $scope.search();
+            } else if (typeof($location.search()).Summary != 'undefined' && ($location.search()).Summary != true) {
+                $scope.query.Summary = ($location.search()).Summary;
+                $scope.search();
+            }
+        };
+
         $scope.results = [];
+        $scope.loading = false;
+        $scope.processTime = 0;
 
         $scope.getSimilarTicketsByItemID = function () {
             $.ajax({
@@ -19,7 +34,9 @@
                 url: '@Url.Action("GetSimilarTicketsID", "Home")',
                 data: { searchID: $scope.query.ItemID },
                 success: function (results) {
-                    $scope.results = angular.fromJson(results);
+                    $scope.loading = false;
+                    $scope.results = angular.fromJson(results).similarTickets;
+                    $scope.processTime = angular.fromJson(results).processTime;
                 }
             });
         };
@@ -31,12 +48,17 @@
                 url: '@Url.Action("GetSimilarTicketsSummary", "Home")',
                 data: { summary: $scope.query.Summary },
                 success: function (results) {
-                    $scope.results = angular.fromJson(results);
+                    $scope.loading = false;
+                    $scope.results = angular.fromJson(results).similarTickets;
+                    $scope.processTime = angular.fromJson(results).processTime;
                 }
             });
         };
 
         $scope.search = function () {
+            $scope.results = [];
+            $scope.loading = true;
+            $scope.processTime = 0;
             if ($scope.query.ItemID.length > 0) {
                 $scope.getSimilarTicketsByItemID();
             } else if ($scope.query.Summary.length > 0) {
@@ -56,33 +78,39 @@
             async: false,
             url: '@Url.Action("Init", "Home")'
         });
+
+        $scope.init();
     }]);
 </script>
 <body>
     <div ng-controller="DemoCtrl">
         <form id="search" class="form-inline">
             <div class="form-group">
-                <input ng-model="query.ItemID" ng-focus="query.Summary = ''" type="text" id="search_ItemID" placeholder="ItemID" class="form-control">
+                <input ng-model="query.ItemID" ng-focus="query.Summary = ''" type="text" id="search_ItemID" placeholder="ID" class="form-control">
                 <span>OR</span>
                 <input ng-model="query.Summary" ng-focus="query.ItemID = ''" type="text" id="search_Summary" placeholder="Summary" class="form-control">
                 <button class="btn btn-default" ng-disabled="query.ItemID.length == 0 && query.Summary.length == 0" ng-click="search()">Submit</button>
-
+                <p></p>
+                <p ng-show="processTime>0">Found resuts in {{processTime}}ms.</p>
             </div>
 
         </form>
+        <div id="loading_sign" ng-show="loading">
+            <p>loading...</p>
+        </div>
         <div id="results">
-            <div class="table-responsive" ng-show="results.length > 0">
+            <div class="table-responsive" ng-show="results.length > 0" >
                 <table class="table table-hover table-condensed">
 
                     <thead>
 
                         <tr>
 
-                            <th>ItemID</th>
+                            <th>ID</th>
 
                             <th>Summary</th>
 
-                            <th>Confidance Rating</th>
+                            <th ng-show="rating">Confidance Rating</th>
 
                         </tr>
 
@@ -96,7 +124,7 @@
 
                             <td class="col-sm-10 summary">{{result.summary}}</td>
 
-                            <td class="col-sm-1 rating">{{result.rating}}</td>
+                           <td class="col-sm-1 rating" ng-show="rating">{{result.rating}}</td>
 
                             <td class="col-sm-1 view">
                                 <button class="btn btn-sm btn-default" ng-click="openCUSPIncidentDialog(result)">View</button>

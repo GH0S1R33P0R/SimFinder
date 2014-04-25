@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using SeniorProjectWeb.Models;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace SeniorProjectWeb.Controllers
 {
@@ -46,7 +47,7 @@ namespace SeniorProjectWeb.Controllers
             if (DataSet.Count == 0)
             {
                 setDataSet();
-                SetThreshold("45");
+                SetThreshold("42");
             }
         }
 
@@ -54,11 +55,14 @@ namespace SeniorProjectWeb.Controllers
         public string GetSimilarTicketsSummary(string summary)
         {
             Init();
+            Stopwatch timer;
 
             var ticket = new StringCompressible(summary);
             simObject.SetComplexity(ticket);
 
+            timer = Stopwatch.StartNew();
             var results = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
+            timer.Stop();
 
             var similarTickets = new List<Ticket>();
             foreach (var element in results)
@@ -71,22 +75,30 @@ namespace SeniorProjectWeb.Controllers
                 });
             }
 
-            return JsonConvert.SerializeObject(similarTickets);
+            var jsonData = new
+            {
+                processTime = timer.ElapsedMilliseconds,
+                similarTickets = similarTickets
+            };
+            return JsonConvert.SerializeObject(jsonData);
         }
 
         [HttpGet]
         public string GetSimilarTicketsID(string searchID)
         {
             Init();
+            Stopwatch timer;
 
             searchID = Regex.Replace(searchID, "IR-0+", "");
+
+            timer = Stopwatch.StartNew();
             var ticket = (from entity in DataSet
                           where entity.ItemID == searchID
                           select entity).First();
             simObject.SetComplexity(ticket);
 
             var results = simObject.FindSimilarValAndEntities(ticket, DataSet.ToArray());
-
+            timer.Stop();
             var similarTickets = new List<Ticket>();
             foreach (var element in results)
             {
@@ -97,8 +109,12 @@ namespace SeniorProjectWeb.Controllers
                     summary = element.Item2.Summary
                 });
             }
-
-            return JsonConvert.SerializeObject(similarTickets);
+            var jsonData = new
+            {
+                processTime = timer.ElapsedMilliseconds,
+                similarTickets = similarTickets
+            };
+            return JsonConvert.SerializeObject(jsonData);
         }
 
         [HttpPost]

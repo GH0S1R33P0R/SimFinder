@@ -4,17 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D2D5F3C-E1C2-4FED-91AF-C85994924053}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{5DACCFC8-6D76-46B9-8810-B49D43A36D71}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SeniorProject</RootNamespace>
-    <AssemblyName>SeniorProject</AssemblyName>
+    <RootNamespace>SeniorProjectAnalytics</RootNamespace>
+    <AssemblyName>SeniorProjectAnalytics</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -48,15 +50,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StringCompressible.cs" />
-    <Compile Include="Similarity.cs" />
-    <Compile Include="ICompressible.cs" />
-    <Compile Include="ISimilarity.cs" />
+    <Compile Include="Analysis.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TicketCompressible.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{791bcde3-1e26-4ef9-bb6f-642d43bae947}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimFinder\SimFinder.csproj">
+      <Project>{8d2d5f3c-e1c2-4fed-91af-c85994924053}</Project>
+      <Name>SimFinder</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\lz4X64.dll">

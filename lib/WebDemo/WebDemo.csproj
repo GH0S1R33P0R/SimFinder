@@ -178,6 +178,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Data\IncidentRequest.csv" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -217,9 +218,13 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SeniorProject\SeniorProject.csproj">
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{791bcde3-1e26-4ef9-bb6f-642d43bae947}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimFinder\SimFinder.csproj">
       <Project>{8d2d5f3c-e1c2-4fed-91af-c85994924053}</Project>
-      <Name>SeniorProject</Name>
+      <Name>SimFinder</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeniorProjectTests", "SeniorProjectTests\SeniorProjectTests.csproj", "{F184FCA5-5A31-477F-ABD3-CAF73CED2C52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F184FCA5-5A31-477F-ABD3-CAF73CED2C52}"
+	ProjectSection(ProjectDependencies) = postProject
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeniorProject", "SeniorProject\SeniorProject.csproj", "{8D2D5F3C-E1C2-4FED-91AF-C85994924053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimFinder", "SimFinder\SimFinder.csproj", "{8D2D5F3C-E1C2-4FED-91AF-C85994924053}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{322B60FE-96E2-41FE-B66E-74596EBD062D}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,7 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.txt = README.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeniorProjectAnalytics", "SeniorProjectAnalytics\SeniorProjectAnalytics.csproj", "{5DACCFC8-6D76-46B9-8810-B49D43A36D71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics", "Analytics\Analytics.csproj", "{5DACCFC8-6D76-46B9-8810-B49D43A36D71}"
+	ProjectSection(ProjectDependencies) = postProject
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{96860405-42A3-47C8-8151-0D249DDFDFC4}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{968604
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeniorProjectWeb", "SeniorProjectWeb\SeniorProjectWeb.csproj", "{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDemo", "WebDemo\WebDemo.csproj", "{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947} = {791BCDE3-1E26-4EF9-BB6F-642D43BAE947}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +57,10 @@ Global
 		{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DB7DF00-1DC6-4AF1-9BE0-B067C283403E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791BCDE3-1E26-4EF9-BB6F-642D43BAE947}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

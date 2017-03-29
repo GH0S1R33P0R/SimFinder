@@ -44,4 +44,4 @@ These classes should be re-written to match the data of your own implementation 
 WebDemo
 =================
 
-An ASP.net based demonstraction of this library in use.
+An ASP.net based demonstration of this library in use.
